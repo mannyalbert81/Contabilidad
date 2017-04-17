@@ -210,7 +210,8 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        
 					        if($_capital_pagado_recaudacion == "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion== "$_fecha_pagos_amortizacion_detalle"){
 					        	
-					        	
+					        	$damortizacion->UpdateBy("estado_cancelado_amortizacion_detalle='TRUE'", "amortizacion_detalle", "id_amortizacion_detalle='$_id_amortizacion_detalle'");
+					        		
 					        	
 					        }elseif ($_capital_pagado_recaudacion == "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion != "$_fecha_pagos_amortizacion_detalle"){
 					        	
@@ -225,6 +226,13 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	
 					        	$damortizacion->UpdateBy("interes_dias_amortizacion_detalle='$_interes_pagar', pagos_amortizacion_detalle='$total'", "amortizacion_detalle", "id_amortizacion_detalle='$_id_amortizacion_detalle'");
 					        		
+					        	
+					        }elseif ($_capital_pagado_recaudacion != "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion == "$_fecha_pagos_amortizacion_detalle"){
+					        	
+					        	
+					        	
+					        }elseif ($_capital_pagado_recaudacion != "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion != "$_fecha_pagos_amortizacion_detalle"){
+					        	
 					        	
 					        }
 					        
