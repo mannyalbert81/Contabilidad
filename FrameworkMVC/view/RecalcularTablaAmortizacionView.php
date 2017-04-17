@@ -11,7 +11,7 @@
       <head>
       
         <meta charset="utf-8"/>
-        <title>Recalcular Tabla de Amortización - Contabilidad 2016</title>
+        <title>Registrar Pago - Contabilidad 2016</title>
         <link rel="stylesheet" href="view/css/bootstrap.css">
           <script src="view/js/jquery.js"></script>
 		  <script src="view/js/bootstrapValidator.min.js"></script>
@@ -20,6 +20,8 @@
 		    webshims.setOptions('forms-ext', {types: 'date'});
 			webshims.polyfill('forms forms-ext');
 		   </script>
+				
+	
 				
 		<script>
 		$(document).ready(function(){
@@ -64,8 +66,8 @@
 
 			$("#Calcular").click(function(){
 
-				var capital_pagado_recaudacion = $("#capital_pagado_recaudacion").val();
-				var fecha_pago_recaudacion = $("#fecha_pago_recaudacion").val();
+				var capital_pagado_recaudacion = $("#capital_pagado_recaudacion_1").val();
+				var fecha_pago_recaudacion = $("#fecha_pago_recaudacion_1").val();
 				
 				
 
@@ -86,13 +88,13 @@
 				});
 
 			
-				 $( "#capital_pagado_recaudacion" ).focus(function() {
+				 $( "#capital_pagado_recaudacion_1" ).focus(function() {
 				 $("#mensaje_capital_pagado_recaudacion").fadeOut("slow");
 				 
 				  return true;
 			    });
 
-				 $( "#fecha_pago_recaudacion" ).focus(function() {
+				 $( "#fecha_pago_recaudacion_1" ).focus(function() {
 					 $("#mensaje_fecha_pago_recaudacion").fadeOut("slow");
 					 
 					  return true;
@@ -110,6 +112,7 @@
 		        $('.marcados').each(function(){
 		            if (this.checked) {
 		                selected +=$(this)+' esta '+$(this).val()+', ';
+		               
 		            }
 		        }); 
 	
@@ -183,15 +186,15 @@
 		</script>
 		
 		
-		
+		 
 		<script>
        $(document).ready(function(){
-    	   $("#capital_pagado_recaudacion").prop("disabled","disabled");
-    	   $("#fecha_pago_recaudacion").prop("disabled","disabled");
+    	   $("#capital_pagado_recaudacion_1").prop("readonly","readonly");
+    	   $("#fecha_pago_recaudacion_1").prop("readonly","readonly");
     	   $("#Calcular").prop("disabled","disabled");
-    	   $("#nombre_entidad_financiera_recaudacion").prop("disabled","disabled");
-    	   $("#numero_papeleta_recaudacion").prop("disabled","disabled");
-    	   $("#concepto_pago_amortizacion").prop("disabled","disabled");
+    	   $("#nombre_entidad_financiera_recaudacion_1").prop("readonly","readonly");
+    	   $("#numero_papeleta_recaudacion_1").prop("readonly","readonly");
+    	   $("#concepto_pago_amortizacion_1").prop("readonly","readonly");
     	 
  
             $(".marcados").click(function(){
@@ -199,21 +202,21 @@
             	
                 if(cant!=0)
                 {
-            	 $("#capital_pagado_recaudacion").prop("disabled","");
-            	 $("#fecha_pago_recaudacion").prop("disabled","");
+            	 $("#capital_pagado_recaudacion_1").prop("readonly","");
+            	 $("#fecha_pago_recaudacion_1").prop("readonly","");
           	     $("#Calcular").prop("disabled","");
-          	     $("#nombre_entidad_financiera_recaudacion").prop("disabled","");
-          	     $("#numero_papeleta_recaudacion").prop("disabled","");
-          	     $("#concepto_pago_amortizacion").prop("disabled","");
+          	     $("#nombre_entidad_financiera_recaudacion_1").prop("readonly","");
+          	     $("#numero_papeleta_recaudacion_1").prop("readonly","");
+          	     $("#concepto_pago_amortizacion_1").prop("readonly","");
           	     
                 }else
                     {
-                	  $("#capital_pagado_recaudacion").prop("disabled","disabled");
-                	  $("#fecha_pago_recaudacion").prop("disabled","disabled");
-               	      $("#Calcular").prop("disabled","disabled");
-               	      $("#nombre_entidad_financiera_recaudacion").prop("disabled","disabled");
-               	      $("#numero_papeleta_recaudacion").prop("disabled","disabled");
-               	      $("#concepto_pago_amortizacion").prop("disabled","disabled");
+                	  $("#capital_pagado_recaudacion_1").prop("readonly","readonly");
+                	  $("#fecha_pago_recaudacion_1").prop("readonly","readonly");
+               	      $("#Calcular").prop("disabled","readonly");
+               	      $("#nombre_entidad_financiera_recaudacion_1").prop("readonly","readonly");
+               	      $("#numero_papeleta_recaudacion_1").prop("readonly","readonly");
+               	      $("#concepto_pago_amortizacion_1").prop("readonly","readonly");
                	      
                     }
                 
@@ -262,31 +265,31 @@ era=rbutton.checked;
 
  $sel_ruc_clientes="";
  $sel_razon_social_clientes="";
-/*
+
  $sel_capital_pagado_recaudacion="";
  $sel_fecha_pago_recaudacion="";
  $sel_nombre_entidad_financiera_recaudacion="";
  $sel_numero_papeleta_recaudacion="";
  $sel_concepto_pago_amortizacion="";
 
- */
+
+ 
  
  if($_SERVER['REQUEST_METHOD']=='POST' )
  {
  	$sel_ruc_clientes=$_POST['ruc_clientes'];
     $sel_razon_social_clientes=$_POST['razon_social_clientes'];
-    /*
+    
     $sel_capital_pagado_recaudacion=$_POST['capital_pagado_recaudacion'];
     $sel_fecha_pago_recaudacion=$_POST['fecha_pago_recaudacion'];
     $sel_nombre_entidad_financiera_recaudacion=$_POST['nombre_entidad_financiera_recaudacion'];
     $sel_numero_papeleta_recaudacion=$_POST['numero_papeleta_recaudacion'];
     $sel_concepto_pago_amortizacion=$_POST['concepto_pago_amortizacion'];
-    */
+  
 	
  }
 
 
- $habilitar="disabled";
  ?>
  
   
@@ -304,7 +307,7 @@ era=rbutton.checked;
 	         <div class="col-lg-12">
 	         <div class="panel panel-info">
 	         <div class="panel-heading">
-	         <h4><i class='glyphicon glyphicon-edit'></i> Recalcular Tabla de Amortización</h4>
+	         <h4><i class='glyphicon glyphicon-edit'></i> Registrar Pago</h4>
 	         </div>
 	         <div class="panel-body">
 	         
@@ -336,7 +339,7 @@ era=rbutton.checked;
 		    </div>
             </div>
             
-          
+              
 	      
 	       <?php if(!empty($resultRes)){?>
 	       <div class="panel-body" > 
@@ -391,24 +394,30 @@ era=rbutton.checked;
 	      <?php }?>
           
           
-	        	
+	       <input type="hidden"  name="capital_pagado_recaudacion" class="form-control"/> 
+			<input type="hidden"  name="fecha_pago_recaudacion"  class="form-control"/> 
+			  <input type="hidden"  name="nombre_entidad_financiera_recaudacion" class="form-control"/> 
+			  <input type="hidden"  name="numero_papeleta_recaudacion" class="form-control"/> 
+			    <input type="hidden"  name="concepto_pago_amortizacion" class="form-control"/>
+                                      	                                     	        	
 	    
 	         
 	    <?php if(!empty($resultSet)){?>
-	    <div class="panel-body"> 
-	    <div class="row">
+	    	<div class="panel-body"> 
+	    	<div class="row">
   		    <div class="form-group" style="margin-top: 25px;">
 		    <div class="col-xs-2 col-md-2" style="text-align: center;">
 			  	<label for="capital_pagado_recaudacion" class="control-label">Capital Pagado:</label>
-			  	<input type="text"  name="capital_pagado_recaudacion" id="capital_pagado_recaudacion" value="" onkeypress="return numeros(event)" class="form-control"/> 
+			  	<input type="text"  name="capital_pagado_recaudacion" id="capital_pagado_recaudacion_1" value="<?php echo $sel_capital_pagado_recaudacion;?>" onkeypress="return numeros(event)" class="form-control"/> 
 			   	 <div id="mensaje_capital_pagado_recaudacion" class="errores"></div>
             </div>
             </div>
+   
             
             <div class="form-group">
 		   	<div class="col-xs-2 col-md-2" style="text-align: center;">
 			  	<label for="fecha_pago_recaudacion" class="control-label">Fecha Pago:</label>
-			  	<input type="date"  name="fecha_pago_recaudacion" id="fecha_pago_recaudacion" value="<?php ?>"  class="form-control"/> 
+			  	<input type="date"  name="fecha_pago_recaudacion" id="fecha_pago_recaudacion_1" value="<?php echo $sel_fecha_pago_recaudacion; ?>"  class="form-control"/> 
 			   	 <div id="mensaje_fecha_pago_recaudacion" class="errores"></div>
             </div>
             </div>
@@ -420,14 +429,14 @@ era=rbutton.checked;
             <div class="form-group">
 		   	<div class="col-xs-4 col-md-4" style="text-align: center;">
 			  	<label for="nombre_entidad_financiera_recaudacion" class="control-label">Entidad Financiera:</label>
-			  	<input type="text"  name="nombre_entidad_financiera_recaudacion" id="nombre_entidad_financiera_recaudacion" value="<?php  ?>" class="form-control"/> 
+			  	<input type="text"  name="nombre_entidad_financiera_recaudacion" id="nombre_entidad_financiera_recaudacion_1" value="<?php echo $sel_nombre_entidad_financiera_recaudacion; ?>" class="form-control"/> 
 			   	
             </div>
             </div>
             <div class="form-group">
 		   	<div class="col-xs-3 col-md-3" style="text-align: center;">
 			  	<label for="numero_papeleta_recaudacion" class="control-label"># Papeleta:</label>
-			  	<input type="text"  name="numero_papeleta_recaudacion" id="numero_papeleta_recaudacion" value="<?php  ?>" class="form-control"/> 
+			  	<input type="text"  name="numero_papeleta_recaudacion" id="numero_papeleta_recaudacion_1" value="<?php echo $sel_numero_papeleta_recaudacion; ?>" class="form-control"/> 
 			   	
             </div>
             </div>
@@ -437,12 +446,100 @@ era=rbutton.checked;
   		     <div class="form-group" style="margin-top: 15px;">
              <div class="col-xs-12 col-md-12">
 		                          <label for="concepto_pago_amortizacion" class="control-label">Concepto de Pago:</label>
-                                  <input type="text"  id="concepto_pago_amortizacion" name="concepto_pago_amortizacion" value="<?php ?>"  placeholder="Observaciones" class="form-control"/>
+                                  <input type="text"  id="concepto_pago_amortizacion_1" name="concepto_pago_amortizacion" value="<?php echo $sel_concepto_pago_amortizacion; ?>"  placeholder="Observaciones" class="form-control"/>
                                   <span class="help-block"></span>
              </div>
 		     </div> 
 	     </div> 
 	     
+	   
+	   
+	  
+	  
+	   <?php if(!empty($resultSet)){?>
+	
+	        
+	        <?php if (isset($mensaje)) {?>
+	        <?php if ($mensaje == "true") {?>
+	        <div class="row">
+	        <div class="form-group" style="margin-left: 15px; margin-top: 15px">
+	        <div class="col-xs-6 col-md-6 alert alert-danger" role="alert">Tienes una Mora Pendiente.</div>
+	        </div>
+	        </div>
+	        <?php }}?>
+	        
+	        <?php if (!empty($capital_pagar)) {?>
+	        
+	        <div class="row">
+	        
+            <div class="form-group" style="margin-top: 25px;">
+		    <div class="col-xs-1 col-md-1" style="text-align: center;">
+			  	<label for="capital_pagar" class="control-label"># Cuota</label>
+			  	<input type="text"  name="capital_pagar" id="capital_pagar" value="<?php if (!empty($numero_cuota)) { echo $numero_cuota; } else { }?>"  class="form-control" readonly/> 
+			</div>
+            </div>
+            <div class="form-group">
+		    <div class="col-xs-2 col-md-2" style="text-align: center;">
+			  	<label for="capital_pagar" class="control-label">Saldo Inicial</label>
+			  	<input type="text"  name="capital_pagar" id="capital_pagar" value="<?php if (!empty($saldo_inicial_amortizacion_detalle)) { echo number_format($saldo_inicial_amortizacion_detalle,2); } else { }?>"  class="form-control" readonly/> 
+			</div>
+            </div>
+  		  
+             
+            <div class="form-group">
+		   	<div class="col-xs-2 col-md-2" style="text-align: center;">
+			  	<label for="interes_normal" class="control-label">Interes Normal:</label>
+			  	<input type="text"  name="interes_normal" id="interes_normal" value="<?php if (!empty($interes_normal)) { echo number_format($interes_normal,2); } else { }?>"  class="form-control" readonly/> 
+			   	
+            </div>
+            </div>
+            
+            <div class="form-group">
+		   	<div class="col-xs-1 col-md-1" style="text-align: center;">
+			  	<label for="dias_atrazados" class="control-label"># Dias:</label>
+			  	<input type="text"  name="dias_atrazados" id="dias_atrazados" value="<?php if ($dias_atrazados>=0) { echo $dias_atrazados; } else { }?>"  class="form-control" readonly/> 
+			   	 
+            </div>
+            </div>
+            <div class="form-group">
+		   	<div class="col-xs-2 col-md-2" style="text-align: center;">
+			  	<label for="interes_dia" class="control-label">Interes Dia:</label>
+			  	<input type="text"  name="interes_dia" id="interes_dia" value="<?php if ($total_dia>=0) { echo number_format($total_dia,2); } else { }?>"  class="form-control" readonly/> 
+			   	
+            </div>
+            </div>
+              <div class="form-group">
+		   	<div class="col-xs-2 col-md-2" style="text-align: center;">
+			  	<label for="interes_dia" class="control-label">Amortización:</label>
+			  	<input type="text"  name="interes_dia" id="interes_dia" value="<?php if ($amortizacion_amortizacion_detalle>=0) { echo number_format($amortizacion_amortizacion_detalle,2); } else { }?>"  class="form-control" readonly/> 
+			   	
+            </div>
+            </div>
+              <div class="form-group">
+		    <div class="col-xs-2 col-md-2" style="text-align: center;">
+			  	<label for="capital_pagar" class="control-label">Pagar:</label>
+			  	<input type="text"  name="capital_pagar" id="capital_pagar" value="<?php if (!empty($capital_pagar)) { echo number_format($capital_pagar,2); } else { }?>"  class="form-control" readonly/> 
+			</div>
+            </div>
+            
+            
+            
+            
+           </div> 
+            <div class="row">
+			<div class="col-xs-12 col-md-12 col-lg-12" style="text-align: center; margin-top:25px" > 
+            <div class="form-group">
+            					   
+            					  <button type="submit" id="Guardar" name="Guardar" onclick="this.form.action='<?php echo $helper->url("RecalcularTablaAmortizacion","InsertaRecalculaTablaAmortizacion"); ?>'" class="btn btn-success" >Guardar</button>
+                                   
+            </div>
+            </div>
+            </div>
+          
+	   <?php }?>
+	   
+	   
+	   <?php } ?>
 	   
 	       
 	       
@@ -463,7 +560,7 @@ era=rbutton.checked;
 	      <?php	foreach ($resultSet as $res)	{ ?>
 	               
 	        		<tr>
-	        		   <th style="color:#456789;font-size:80%;"><input type="radio" id="id_amortizacion_detalle[]"   name="id_amortizacion_detalle[]"  value="<?php  echo $res->id_amortizacion_detalle;  ?> " onclick="uncheckRadio(this)" class="marcados"></th>
+	        		   <th style="color:#456789;font-size:80%;"><input type="radio"  id="id_amortizacion_detalle[]"   name="id_amortizacion_detalle[]"  value="<?php echo $res->id_amortizacion_detalle;  ?>" onclick="uncheckRadio(this)" class="marcados" ></th>
 	        		   <td style="color:#000000;font-size:80%;"> <?php echo $res->numero_cuota_amortizacion_detalle; ?></td>
 	            	   <td style="color:#000000;font-size:80%;"> <?php echo number_format($res->saldo_inicial_amortizacion_detalle,2); ?></td>
 		               <td style="color:#000000;font-size:80%;"> <?php echo number_format($res->interes_amortizacion_detalle,2); ?>     </td> 
@@ -478,15 +575,7 @@ era=rbutton.checked;
 		</table>  
        	</section>
 		
-		  <div class="row">
-			<div class="col-xs-12 col-md-12 col-lg-12" style="text-align: center; margin-top:25px" > 
-            <div class="form-group">
-            					   
-            					  <button type="submit" id="Guardar" name="Guardar" onclick="this.form.action='<?php echo $helper->url("RecalcularTablaAmortizacion","InsertaRecalculaTablaAmortizacion"); ?>'" class="btn btn-success" >Guardar</button>
-                                   
-            </div>
-            </div>
-            </div>
+		 
 		 </div> 		  
 		  		  <?php } ?>
 		

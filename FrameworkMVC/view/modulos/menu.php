@@ -241,7 +241,7 @@ $controladores=$_SESSION['controladores'];
 			<a href="index.php?controller=ReporteTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Reporte Tabla Amortización</span> </a>
 			</li>
           <li style="<?php echo getcontrolador("RecalcularTablaAmortizacion",$controladores) ?>">
-			<a href="index.php?controller=RecalcularTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Recalcular Tabla Amortización</span> </a>
+			<a href="index.php?controller=RecalcularTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Registrar Pago</span> </a>
 		  </li>
 </ul>
 </li>
