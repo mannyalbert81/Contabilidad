@@ -175,7 +175,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 								amortizacion_cabeza.id_tipo_creditos = tipo_creditos.id_tipo_creditos AND
 								amortizacion_detalle.id_amortizacion_cabeza = amortizacion_cabeza.id_amortizacion_cabeza AND
 								intereses.id_intereses = amortizacion_cabeza.id_intereses AND
-								tipo_intereses.id_tipo_intereses = intereses.id_tipo_intereses AND fc_clientes.id_clientes='$_id_clientes'  AND amortizacion_cabeza.id_amortizacion_cabeza = '$_id_amortizacion_cabeza' AND amortizacion_detalle.estado_cancelado_amortizacion_detalle = 'FALSE'";
+								tipo_intereses.id_tipo_intereses = intereses.id_tipo_intereses AND fc_clientes.id_clientes='$_id_clientes'  AND amortizacion_cabeza.id_amortizacion_cabeza = '$_id_amortizacion_cabeza' AND amortizacion_detalle.estado_cancelado_amortizacion_detalle = 'FALSE' AND estado_final = 'FALSE'";
 								
 								$id="amortizacion_detalle.numero_cuota_amortizacion_detalle";
 									
@@ -266,11 +266,21 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	
 					        }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
 					        	
+					        	$numero_cuota= $_numero_cuota_amortizacion_detalle;
+					        	$saldo_inicial_amortizacion_detalle = $_saldo_inicial_amortizacion_detalle;
+					        	$amortizacion_amortizacion_detalle = $_amortizacion_amortizacion_detalle;
 					        	
+					        	
+					        	$dias_atrazados	= (strtotime($_fecha_pagos_amortizacion_detalle)-strtotime($_fecha_pago_recaudacion))/86400;
+					        	$dias_atrazados 	= abs($dias_atrazados); $dias_atrazados = floor($dias_atrazados);
+					        	$interes_normal = $_interes_amortizacion_detalle;
+					        	$interes_dia = $_interes_amortizacion_detalle / 30;
+					        	$total_dia = $interes_dia * $dias_atrazados;
+					        	$capital_pagar= $interes_normal + $total_dia + $amortizacion_amortizacion_detalle;
 					        
 					        	
 					        	
-					        }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion != "$_fecha_pagos_amortizacion_detalle"){
+					        }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion > "$_fecha_pagos_amortizacion_detalle"){
 					        
 					        	
 					        	
@@ -324,7 +334,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 								amortizacion_cabeza.id_tipo_creditos = tipo_creditos.id_tipo_creditos AND
 								amortizacion_detalle.id_amortizacion_cabeza = amortizacion_cabeza.id_amortizacion_cabeza AND
 								intereses.id_intereses = amortizacion_cabeza.id_intereses AND
-								tipo_intereses.id_tipo_intereses = intereses.id_tipo_intereses AND fc_clientes.id_clientes='$_id_clientes'  AND amortizacion_cabeza.id_amortizacion_cabeza = '$_id_amortizacion_cabeza' AND amortizacion_detalle.estado_cancelado_amortizacion_detalle = 'FALSE'";
+								tipo_intereses.id_tipo_intereses = intereses.id_tipo_intereses AND fc_clientes.id_clientes='$_id_clientes'  AND amortizacion_cabeza.id_amortizacion_cabeza = '$_id_amortizacion_cabeza' AND amortizacion_detalle.estado_cancelado_amortizacion_detalle = 'FALSE' AND estado_final = 'FALSE'";
 					
 								$id="amortizacion_detalle.numero_cuota_amortizacion_detalle";
 									
@@ -452,9 +462,9 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        
 					        $resultClientes= $camortizacion->getBy("id_amortizacion_cabeza ='$_id_amortizacion_cabeza' AND id_entidades ='$_id_entidades'");
 					        $_id_clientes=$resultClientes[0]->id_fc_clientes;
-					        $_tasa_interes_amortizacion_cabeza[0]->tasa_interes_amortizacion_cabeza;
-					        $_plazo_meses_amortizacion_cabeza[0]->plazo_meses_amortizacion_cabeza;
-					        $_interes_normal_mensual_amortizacion_cabeza[0]->interes_normal_mensual_amortizacion_cabeza;
+					        $_tasa_interes_amortizacion_cabeza=$resultClientes[0]->tasa_interes_amortizacion_cabeza;
+					        $_plazo_meses_amortizacion_cabeza=$resultClientes[0]->plazo_meses_amortizacion_cabeza;
+					        $_interes_normal_mensual_amortizacion_cabeza=$resultClientes[0]->interes_normal_mensual_amortizacion_cabeza;
 					        
 					        
 					        
@@ -516,81 +526,92 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
 					        	
 					        	
-					        
+					        	$capital = $_capital_pagado_recaudacion - $_interes_amortizacion_detalle;
+					            $saldo_inicial_1= $_saldo_inicial_amortizacion_detalle - $capital;
+					            $numero = $_plazo_meses_amortizacion_cabeza - $_numero_cuota_amortizacion_detalle;
+					            $interes_mensual = $_tasa_interes_amortizacion_cabeza / 12;
+					        	$valor_cuota =  ($saldo_inicial_1 * $interes_mensual) /  (1- pow((1+$interes_mensual), - $numero ))  ;
 					        	
-					        	//////////////////////////////////////////////////dibujar tabla de amortizacion////////////////////////////////
-					        	
-					        	////resultados
-					        	$interes_mensual = $_tasa_interes_amortizacion_cabeza;
-					        	$numero_cuotas = $_plazo_meses_amortizacion_cabeza;
-					        	$mora_mensual = $_valor_intereses/360;
-					        	$valor_cuota =  ($_saldo_inicial_amortizacion_detalle * $interes_mensual) /  (1- pow((1+$interes_mensual), -$_plazo_meses_amortizacion_cabeza ))  ;
+					        	$_capital_prestado_amortizacion_cabeza_1= $saldo_inicial_1;
+					        	$numero_cuotas= $numero;
+					        	$fecha_corte= $_fecha_pagos_amortizacion_detalle;
 					        	
 					        	
-					        	
-					        	$resultAmortizacion=array();
-					        	$capital = $_saldo_inicial_amortizacion_detalle;
-					        	$inter_ant= $interes_mensual;
-					        	$interes=  $capital * $inter_ant;
-					        	$amortizacion = $valor_cuota - $interes;
-					        	$saldo_inicial= $capital - $amortizacion;
+					        	$resultAmortizacion=$this->tablaAmortizacion($_capital_prestado_amortizacion_cabeza_1, $numero_cuotas, $interes_mensual, $valor_cuota, $fecha_corte);
 					        	
 					        	
 					        	
-					        	for( $i = 0; $i <= $numero_cuotas; $i++) {
-					        	
-					        		if ($i == 0)
+					        		try
 					        		{
-					        			$interes= 0;
-					        			$amortizacion = 0;
-					        			$saldo_inicial= $capital;
-					        			$fecha=strtotime('+0 day',strtotime($_fecha_pagos_amortizacion_detalle));
-					        			$fecha=date('Y-m-d',$fecha);
-					        			$fecha_corte=$fecha;
-					        			$valor = 0;
-					        			$saldo_inicial_ant = $capital;
-					        		}
-					        		else
+					        			$damortizacion->UpdateBy("estado_eliminar='TRUE'", "amortizacion_detalle", "id_amortizacion_cabeza ='$_id_amortizacion_cabeza' AND id_entidades ='$_id_entidades' AND numero_cuota_amortizacion_detalle >= '$_numero_cuota_amortizacion_detalle'");
+					        			 
+					        			
+					        			
+					        		
+					        		foreach($resultAmortizacion['tabla'] as $res)
 					        		{
-					        	
-					        	
-					        			$saldo_inicial_ant = $saldo_inicial_ant - $amortizacion;
-					        			$interes= $saldo_inicial_ant * $inter_ant;
-					        			$amortizacion = $valor_cuota - $interes;
-					        	
-					        			$saldo_inicial= $saldo_inicial_ant  - $amortizacion;
-					        	
-					        	
-					        			$fecha=strtotime('+30 day',strtotime($_fecha_pagos_amortizacion_detalle));
-					        			$fecha=date('Y-m-d',$fecha);
-					        			$fecha_corte=$fecha;
-					        			$valor = $valor_cuota;
 					        				
+					        		
+					        			try
+					        			{
 					        				
-					        				
-					        		}
-					        		/*	$total_interes = $total_interes + $interes;
-					        				
-					        		$total_amortizacion = $total_amortizacion + $amortizacion;
-					        		*/
-					        	
-					        	
-					        		$resultAmortizacion['tabla'][]=array(
-					        				array('pagos_trimestrales'=> $i,
-					        						'saldo_inicial'=>$saldo_inicial,
-					        						'interes'=>$interes,
-					        						'amortizacion'=>$amortizacion,
-					        						'pagos'=>$valor,
-					        						'fecha_pago'=>$fecha
+					        					
+					        				$_numero_cuota_amortizacion_detalle_1 = $res[0]['pagos_trimestrales'];
+					        				$_saldo_inicial_amortizacion_detalle_1 = $res[0]['saldo_inicial'];
+					        				$_interes_amortizacion_detalle_1 = $res[0]['interes'];
+					        				$_amortizacion_amortizacion_detalle_1 = $res[0]['amortizacion'];
+					        				$_pagos_amortizacion_detalle_1 = $res[0]['pagos'];
+					        				$_fecha_pagos_amortizacion_detalle_1 = $res[0]['fecha_pago'];
+					        		
+					        					
+					        		
+					        		
+					        				$funcion = "ins_amortizacion_detalle";
+					        				$parametros = "'$_id_amortizacion_cabeza','$_id_entidades','$_numero_cuota_amortizacion_detalle_1', '$_saldo_inicial_amortizacion_detalle_1', '$_interes_amortizacion_detalle_1', '$_amortizacion_amortizacion_detalle_1', '$_pagos_amortizacion_detalle_1', '$_fecha_pagos_amortizacion_detalle_1'";
+					        				$damortizacion->setFuncion($funcion);
+					        				$damortizacion->setParametros($parametros);
+					        				$resultado=$damortizacion->Insert();
+					        		
+					        					
+					        					
+					        			} catch (Exception $e)
+					        			{
+					        				$this->view("Error",array(
+					        						"resultado"=>"Eror al Insertar Tabla de Amortizacion ->". $id
 					        				));
-					        	}
-					        	
-					        	
-					        	
-					        	
-					        	
-					        	
-					        	
+					        				exit();
+					        			}
+					        				
+					        		}
+					        		
+					        		$where_del = "id_amortizacion_cabeza ='$_id_amortizacion_cabeza' AND id_entidades ='$_id_entidades' AND estado_eliminar = 'TRUE'";
+					        		$damortizacion->deleteByWhere($where_del);
+					        		 
+					        		
+					        		$funcion = "ins_recaudacion";
+					        		$parametros = "'$_id_clientes','$_id_entidades', '$_id_amortizacion_cabeza','$_capital_pagado_recaudacion','$_numero_cuota_amortizacion_detalle','$_fecha_pago_recaudacion', '$_id_amortizacion_detalle', '$_nombre_entidad_financiera_recaudacion', '$_numero_papeleta_recaudacion', '$_concepto_pago_amortizacion'";
+					        		$recaudacion->setFuncion($funcion);
+					        		$recaudacion->setParametros($parametros);
+					        		$resultado=$recaudacion->Insert();
+					        		
+					        		
+					        		
+					        		$damortizacion->UpdateBy("saldo_inicial_amortizacion_detalle='$saldo_inicial_1' AND fecha_pagos_amortizacion_detalle='$_fecha_pagos_amortizacion_detalle'", "amortizacion_detalle", "id_amortizacion_cabeza='$_id_amortizacion_cabeza' AND numero_cuota_amortizacion_detalle=0");
+					        		$damortizacion->UpdateBy("estado_final='TRUE'", "amortizacion_detalle", "id_amortizacion_cabeza='$_id_amortizacion_cabeza' AND numero_cuota_amortizacion_detalle < '$_numero_cuota_amortizacion_detalle' AND numero_cuota_amortizacion_detalle != 0");
+					        		$camortizacion->UpdateBy("plazo_meses_amortizacion_cabeza='$numero'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
+					        		
+					        		
+					        		
+					        		}catch (Exception $e)
+						   			{
+						   
+						   				$this->view("Error",array(
+						   						"resultado"=>"Eror al Insertar Tabla de Amortizacion ->". $id
+						   				));
+						   				exit();
+						   
+						   			}
+											        	
 					        	
 					        	
 					        	
@@ -637,6 +658,58 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 			));
 	
 		}
+	
+	}
+	
+	
+	public function tablaAmortizacion($_capital_prestado_amortizacion_cabeza_1, $numero_cuotas, $interes_mensual, $valor_cuota, $fecha_corte)
+	{
+		//array donde guardar tabla amortizacion
+		$resultAmortizacion=array();
+		 
+	
+		$capital = $_capital_prestado_amortizacion_cabeza_1;
+		$inter_ant= $interes_mensual;
+		$interes=  $capital * $inter_ant;
+		$amortizacion = $valor_cuota - $interes;
+		$saldo_inicial= $capital - $amortizacion;
+	
+	
+	
+		for( $i = 1; $i <= $numero_cuotas; $i++) {
+				
+			
+	
+	
+				$saldo_inicial_ant = $saldo_inicial_ant - $amortizacion;
+				$interes= $saldo_inicial_ant * $inter_ant;
+				$amortizacion = $valor_cuota - $interes;
+	
+				$saldo_inicial= $saldo_inicial_ant  - $amortizacion;
+	
+	
+				$fecha=strtotime('+30 day',strtotime($fecha_corte));
+				$fecha=date('Y-m-d',$fecha);
+				$fecha_corte=$fecha;
+				$valor = $valor_cuota;
+					
+					
+				
+	
+			$resultAmortizacion['tabla'][]=array(
+					array('pagos_trimestrales'=> $i,
+							'saldo_inicial'=>$saldo_inicial,
+							'interes'=>$interes,
+							'amortizacion'=>$amortizacion,
+							'pagos'=>$valor,
+							'fecha_pago'=>$fecha
+					));
+		}
+	
+		
+	
+		return $resultAmortizacion;
+	
 	
 	}
 	
