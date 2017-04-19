@@ -246,6 +246,7 @@ $controladores=$_SESSION['controladores'];
 		   <li style="<?php echo getcontrolador("ReporteRecaudacion",$controladores) ?>">
 			<a href="index.php?controller=ReporteRecaudacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Reporte Recaudacion</span> </a>
 			</li>
+			<li style="<?php echo getcontrolador("RecalcularTablaAmortizacion",$controladores) ?>">
 			<a href="index.php?controller=RecalcularTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Registrar Pago</span> </a>
 		  </li>
 </ul>
