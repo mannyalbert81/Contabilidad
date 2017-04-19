@@ -22,6 +22,45 @@
 		    webshims.setOptions('forms-ext', {types: 'date'});
 			webshims.polyfill('forms forms-ext');
 		</script>
+			
+			
+			<script>
+		$(document).ready(function(){
+
+			$("#buscar").click(function(){
+
+				var ruc_clientes = $("#ruc_clientes").val();
+				var razon_social_clientes = $("#razon_social_clientes").val();
+				
+				
+
+				if (ruc_clientes == "" &&  razon_social_clientes == "")
+				{
+					$("#mensaje_razon_social_clientes").text("Ingrese una Cedula o un Nombre");
+		    		$("#mensaje_razon_social_clientes").fadeIn("slow"); //Muestra mensaje de error
+		            return false;
+				}
+				
+
+				});
+
+			
+				 $( "#razon_social_clientes" ).focus(function() {
+				 $("#mensaje_razon_social_clientes").fadeOut("slow");
+				 
+				  return true;
+			    });
+
+				 $( "#ruc_clientes" ).focus(function() {
+					 $("#mensaje_razon_social_clientes").fadeOut("slow");
+					 
+					  return true;
+				    });
+			 
+			 
+        });
+		</script>
+			
 				
 		<script>
 		$(document).ready(function(){
@@ -32,7 +71,12 @@
 				var numero_pagare_amortizacion_cabeza = $("#numero_pagare_amortizacion_cabeza").val();
 				var id_tipo_creditos = $("#id_tipo_creditos").val();
 				var capital_prestado_amortizacion_cabeza = $("#capital_prestado_amortizacion_cabeza").val();
-				var capital_prestado_amortizacion_cabeza = $("#capital_prestado_amortizacion_cabeza").val();
+				var tasa_interes_amortizacion_cabeza = $("#tasa_interes_amortizacion_cabeza").val();
+				var plazo_meses_amortizacion_cabeza = $("#plazo_meses_amortizacion_cabeza").val();
+				var fecha_amortizacion_cabeza = $("#fecha_amortizacion_cabeza").val();
+
+
+				   
 				
 				if (numero_credito_amortizacion_cabeza == "" )
 		    	{
@@ -58,13 +102,26 @@
 		    		$("#mensaje_capital_prestado_amortizacion_cabeza").fadeIn("slow"); //Muestra mensaje de error
 		            return false;
 			    }
-				if (capital_prestado_amortizacion_cabeza == "" )
+				if (tasa_interes_amortizacion_cabeza == "")
 		    	{
-					$("#mensaje_capital_prestado_amortizacion_cabeza").text("Ingrese un capital");
-		    		$("#mensaje_capital_prestado_amortizacion_cabeza").fadeIn("slow"); //Muestra mensaje de error
+					$("#mensaje_tasa_interes_amortizacion_cabeza").text("Ingrese taza y plazo");
+		    		$("#mensaje_tasa_interes_amortizacion_cabeza").fadeIn("slow"); //Muestra mensaje de error
+		            return false;
+			    }
+
+				if (plazo_meses_amortizacion_cabeza == "")
+		    	{
+					$("#mensaje_tasa_interes_amortizacion_cabeza").text("Ingrese taza y plazo");
+		    		$("#mensaje_tasa_interes_amortizacion_cabeza").fadeIn("slow"); //Muestra mensaje de error
 		            return false;
 			    }
 				
+				if (fecha_amortizacion_cabeza == "" )
+		    	{
+					$("#mensaje_fecha_amortizacion_cabeza").text("Ingrese Fecha");
+		    		$("#mensaje_fecha_amortizacion_cabeza").fadeIn("slow"); //Muestra mensaje de error
+		            return false;
+			    }
 
 				});
 
@@ -86,6 +143,26 @@
 			 $( "#capital_prestado_amortizacion_cabeza" ).focus(function() {
 				 
 				  $("#mensaje_capital_prestado_amortizacion_cabeza").fadeOut("slow");
+				  return true;
+			    });
+			    
+			 $( "#tasa_interes_amortizacion_cabeza" ).focus(function() {
+				 
+				  $("#mensaje_tasa_interes_amortizacion_cabeza").fadeOut("slow");
+				  
+				  return true;
+			    });
+
+
+			 $( "#plazo_meses_amortizacion_cabeza" ).focus(function() {
+				 
+				  $("#mensaje_tasa_interes_amortizacion_cabeza").fadeOut("slow");
+				  return true;
+			    });
+
+			 $( "#fecha_amortizacion_cabeza" ).focus(function() {
+				 
+				  $("#mensaje_fecha_amortizacion_cabeza").fadeOut("slow");
 				  return true;
 			    });
 			 
@@ -209,7 +286,7 @@
 		   		<div class="col-xs-4 col-md-4" style="text-align: center;">
 			  	<label for="razon_social_clientes" class="control-label">Razón Social:</label>
 			  	<input type="text"  name="razon_social_clientes" id="razon_social_clientes" value="<?php if (!empty($resultRes)) {  foreach($resultRes as $resEdit) {echo $resEdit->razon_social_clientes;} }  else {echo $sel_razon_social_clientes;} ?>" class="form-control"/> 
-			   	
+			   	<div id="mensaje_razon_social_clientes" class="errores"></div>
             	</div>
               </div>
 		   	
@@ -245,7 +322,6 @@
 			  <div class="col-xs-2 col-md-2">
 		    <div class="form-group">
 					            <label for="id_tipo_creditos" class="control-label">Tipo Crédito:</label>
-					           <div id="mensaje_id_tipo_creditos" class="errores"></div>
 					           <select name="id_tipo_creditos" id="id_tipo_creditos"  class="form-control" >
                                   
                                   <option value="" selected="selected">--Seleccione--</option>
@@ -255,7 +331,8 @@
 							        	
 							        <?php } ?>
 								   </select> 
-                                  <span class="help-block"></span>	
+                                  <div id="mensaje_id_tipo_creditos" class="errores"></div>
+					           
 		     </div>
 		     </div>
 		    <div class="col-xs-2 col-md-2">
@@ -272,16 +349,19 @@
 		    
 		     					  <label for="tasa_interes_amortizacion_cabeza" class="control-label">Tasa:</label>
                                   <input type="text" class="form-control" id="tasa_interes_amortizacion_cabeza" name="tasa_interes_amortizacion_cabeza" value="<?php echo $sel_tasa_interes_amortizacion_cabeza;?>" onkeypress="return numeros(event)" placeholder="%">
-                                  <span class="help-block"></span>
+                                  
                                   <div id="mensaje_tasa_interes_amortizacion_cabeza" class="errores"></div>
 		    </div>
 		    </div>
+		    
+		   
+		    
 		    <div class="col-xs-1 col-md-1">
 		    <div class="form-group">
 		    
 		     					  <label for="plazo_meses_amortizacion_cabeza" class="control-label">Plazo:</label>
                                   <input type="text" class="form-control" id="plazo_meses_amortizacion_cabeza" name="plazo_meses_amortizacion_cabeza" value="<?php echo $sel_plazo_meses_amortizacion_cabeza;?>" onkeypress="return numeros(event)" placeholder="#">
-                                  <span class="help-block"></span>
+                                 
                                   <div id="mensaje_plazo_meses_amortizacion_cabeza" class="errores"></div>
 		    </div>
 		    </div>
@@ -290,7 +370,7 @@
 		    
 		     					  <label for="fecha_amortizacion_cabeza" class="control-label">Fecha: </label>
                                   <input type="date" class="form-control" id="fecha_amortizacion_cabeza" name="fecha_amortizacion_cabeza" value="<?php echo $sel_fecha_amortizacion_cabeza; ?>" >
-                                  <span class="help-block"></span>
+                                 
                                   <div id="mensaje_fecha_amortizacion_cabeza" class="errores"></div>
 		    </div>
 		    </div>

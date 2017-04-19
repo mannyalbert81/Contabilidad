@@ -104,6 +104,90 @@
         });
 		</script>
 		
+		<script>
+		$(document).ready(function(){
+
+			$("#Guardar").click(function(){
+
+				var capital_pagado_recaudacion = $("#capital_pagado_recaudacion_1").val();
+				var fecha_pago_recaudacion = $("#fecha_pago_recaudacion_1").val();
+                var nombre_entidad_financiera_recaudacion = $("#nombre_entidad_financiera_recaudacion_1").val();
+				var numero_papeleta_recaudacion = $("#numero_papeleta_recaudacion_1").val();
+				var concepto_pago_amortizacion = $("#concepto_pago_amortizacion_1").val();
+
+
+
+				if (capital_pagado_recaudacion == "")
+				{
+					$("#mensaje_capital_pagado_recaudacion").text("Ingrese un Valor");
+		    		$("#mensaje_capital_pagado_recaudacion").fadeIn("slow"); //Muestra mensaje de error
+		            return false;
+				}
+
+				if (fecha_pago_recaudacion == "")
+				{
+					$("#mensaje_fecha_pago_recaudacion").text("Ingrese una Fecha");
+		    		$("#mensaje_fecha_pago_recaudacion").fadeIn("slow"); //Muestra mensaje de error
+		            return false;
+				}
+
+				if (nombre_entidad_financiera_recaudacion == "")
+				{
+					$("#mensaje_nombre_entidad_financiera_recaudacion").text("Ingrese un Banco");
+		    		$("#mensaje_nombre_entidad_financiera_recaudacion").fadeIn("slow"); //Muestra mensaje de error
+		            return false;
+				}
+				if (numero_papeleta_recaudacion == "")
+				{
+					$("#mensaje_numero_papeleta_recaudacion").text("Ingrese # Papeleta");
+		    		$("#mensaje_numero_papeleta_recaudacion").fadeIn("slow"); //Muestra mensaje de error
+		            return false;
+				}
+				if (concepto_pago_amortizacion == "")
+				{
+					$("#mensaje_concepto_pago_amortizacion").text("Ingrese un Concepto");
+		    		$("#mensaje_concepto_pago_amortizacion").fadeIn("slow"); //Muestra mensaje de error
+		            return false;
+				}
+
+
+				
+
+				});
+
+			
+				 $( "#capital_pagado_recaudacion_1" ).focus(function() {
+				 $("#mensaje_capital_pagado_recaudacion").fadeOut("slow");
+				 
+				  return true;
+			    });
+
+				 $( "#fecha_pago_recaudacion_1" ).focus(function() {
+					 $("#mensaje_fecha_pago_recaudacion").fadeOut("slow");
+					 
+					  return true;
+				    });
+				 $( "#nombre_entidad_financiera_recaudacion_1" ).focus(function() {
+					 $("#mensaje_nombre_entidad_financiera_recaudacion").fadeOut("slow");
+					 
+					  return true;
+				    });
+				 $( "#numero_papeleta_recaudacion_1" ).focus(function() {
+					 $("#mensaje_numero_papeleta_recaudacion").fadeOut("slow");
+					 
+					  return true;
+				    });
+
+				 $( "#concepto_pago_amortizacion_1" ).focus(function() {
+					 $("#mensaje_concepto_pago_amortizacion").fadeOut("slow");
+					 
+					  return true;
+				    });
+			 
+			 
+        });
+		</script>
+		
 		<script >
 	        $(document).ready(function() {
 			$('#Recuperar').click(function(){
@@ -155,8 +239,8 @@
 		      
 		    }); 
 	
-		});
-		</script>
+		   });
+		  </script>
 		
 		
 		<script >
@@ -430,14 +514,14 @@ era=rbutton.checked;
 		   	<div class="col-xs-4 col-md-4" style="text-align: center;">
 			  	<label for="nombre_entidad_financiera_recaudacion" class="control-label">Entidad Financiera:</label>
 			  	<input type="text"  name="nombre_entidad_financiera_recaudacion" id="nombre_entidad_financiera_recaudacion_1" value="<?php echo $sel_nombre_entidad_financiera_recaudacion; ?>" class="form-control"/> 
-			   	
+			   	<div id="mensaje_nombre_entidad_financiera_recaudacion" class="errores"></div>
             </div>
             </div>
             <div class="form-group">
 		   	<div class="col-xs-3 col-md-3" style="text-align: center;">
 			  	<label for="numero_papeleta_recaudacion" class="control-label"># Papeleta:</label>
 			  	<input type="text"  name="numero_papeleta_recaudacion" id="numero_papeleta_recaudacion_1" value="<?php echo $sel_numero_papeleta_recaudacion; ?>" class="form-control"/> 
-			   	
+			   	<div id="mensaje_numero_papeleta_recaudacion" class="errores"></div>
             </div>
             </div>
         </div>   
@@ -447,7 +531,7 @@ era=rbutton.checked;
              <div class="col-xs-12 col-md-12">
 		                          <label for="concepto_pago_amortizacion" class="control-label">Concepto de Pago:</label>
                                   <input type="text"  id="concepto_pago_amortizacion_1" name="concepto_pago_amortizacion" value="<?php echo $sel_concepto_pago_amortizacion; ?>"  placeholder="Observaciones" class="form-control"/>
-                                  <span class="help-block"></span>
+                                  <div id="mensaje_concepto_pago_amortizacion" class="errores"></div>
              </div>
 		     </div> 
 	     </div> 
