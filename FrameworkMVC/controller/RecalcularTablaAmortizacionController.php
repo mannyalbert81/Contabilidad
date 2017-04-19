@@ -526,7 +526,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					            }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
 					        	
 					        	
-					        	$capital = $_capital_pagado_recaudacion - $_interes_amortizacion_detalle;
+					        	$capital = $_capital_pagado_recaudacion - $_pagos_amortizacion_detalle ;
 					            $saldo_inicial_1= $_saldo_inicial_amortizacion_detalle - $capital;
 					            $numero = $_plazo_meses_amortizacion_cabeza - $_numero_cuota_amortizacion_detalle;
 					            $interes_mensual = $_tasa_interes_amortizacion_cabeza / 12;
