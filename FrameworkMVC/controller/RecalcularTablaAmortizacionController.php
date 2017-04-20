@@ -225,9 +225,32 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        $_amortizacion_amortizacion_detalle=$resultCabeza[0]->amortizacion_amortizacion_detalle;
 					        
 					        
-					        if($_capital_pagado_recaudacion < "$_pagos_amortizacion_detalle"){
+					        if($_capital_pagado_recaudacion < "$_interes_amortizacion_detalle"){
 					        	
 					        	$mensaje = "true";
+					        }
+					        
+					        if($_capital_pagado_recaudacion < "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
+					        
+					        	
+					        	
+					        	
+					        	$numero_cuota= $_numero_cuota_amortizacion_detalle;
+					        	$saldo_inicial_amortizacion_detalle = $_saldo_inicial_amortizacion_detalle;
+					        	$amortizacion_amortizacion_detalle = $_amortizacion_amortizacion_detalle;
+					        	
+					        	$dias_atrazados	= (strtotime($_fecha_pagos_amortizacion_detalle)-strtotime($_fecha_pago_recaudacion))/86400;
+					        	$dias_atrazados 	= abs($dias_atrazados); $dias_atrazados = floor($dias_atrazados);
+					        	$interes_normal = $_interes_amortizacion_detalle;
+					        	$interes_dia = $_interes_amortizacion_detalle / 30;
+					        	$total_dia = $interes_dia * $dias_atrazados;
+					        	$capital_pagar= $interes_normal + $total_dia + $amortizacion_amortizacion_detalle;
+					        	
+					        	
+					        	
+					        	
+					        	
+					        	
 					        }
 					        
 					        
@@ -465,6 +488,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        $_tasa_interes_amortizacion_cabeza=$resultClientes[0]->tasa_interes_amortizacion_cabeza;
 					        $_plazo_meses_amortizacion_cabeza=$resultClientes[0]->plazo_meses_amortizacion_cabeza;
 					        $_interes_normal_mensual_amortizacion_cabeza=$resultClientes[0]->interes_normal_mensual_amortizacion_cabeza;
+					        $_total_deuda=$resultClientes[0]->total_deuda;
 					        
 					        
 					        
@@ -487,7 +511,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	$total_dia = $interes_dia * $dias_atrazados;
 					        	$capital_pagar= $interes_normal + $total_dia + $amortizacion_amortizacion_detalle;
 					        
-					        
+					            $recalcular=$_total_deuda- $_pagos_amortizacion_detalle;
 					        	
 					        	
 					        	$funcion = "ins_recaudacion";
@@ -498,14 +522,17 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	
 					        	$damortizacion->UpdateBy("estado_cancelado_amortizacion_detalle='TRUE'", "amortizacion_detalle", "id_amortizacion_detalle='$_id_amortizacion_detalle'");
 					        		
-					        
+					        	
+					        	$camortizacion->UpdateBy("total_deuda='$recalcular'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
+					        	
 					        
 					        }elseif ($_capital_pagado_recaudacion == "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion > "$_fecha_pagos_amortizacion_detalle"){
 					        
 					        	$numero_cuota= $_numero_cuota_amortizacion_detalle;
 					        	$saldo_inicial_amortizacion_detalle = $_saldo_inicial_amortizacion_detalle;
 					        	$amortizacion_amortizacion_detalle = $_amortizacion_amortizacion_detalle;
-					        
+					        	$recalcular=$_total_deuda- $_pagos_amortizacion_detalle;
+					        	
 					        
 					        	$dias_atrazados	= (strtotime($_fecha_pagos_amortizacion_detalle)-strtotime($_fecha_pago_recaudacion))/86400;
 					        	$dias_atrazados 	= abs($dias_atrazados); $dias_atrazados = floor($dias_atrazados);
@@ -521,9 +548,10 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	$resultado=$recaudacion->Insert();
 					        
 					        	$damortizacion->UpdateBy("estado_cancelado_amortizacion_detalle='TRUE', interes_dias_amortizacion_detalle='$total_dia', pagos_amortizacion_detalle='$capital_pagar'", "amortizacion_detalle", "id_amortizacion_detalle='$_id_amortizacion_detalle'");
-					        					   
+					        	$camortizacion->UpdateBy("total_deuda='$recalcular'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
+					        	
 					        
-					            }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
+					       }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
 					        	
 					        	
 					        	$capital = $_capital_pagado_recaudacion - $_pagos_amortizacion_detalle ;
@@ -536,6 +564,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	$numero_cuotas= $numero;
 					        	$fecha_corte= $_fecha_pagos_amortizacion_detalle;
 					        	
+					        	$recalcular=$_total_deuda - $_pagos_amortizacion_detalle;
 					        	
 					        	
 					        	
@@ -595,8 +624,8 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        		
 					        		
 					        		
-					        		//$damortizacion->UpdateBy("saldo_inicial_amortizacion_detalle='$saldo_inicial_1' AND fecha_pagos_amortizacion_detalle='$_fecha_pagos_amortizacion_detalle'", "amortizacion_detalle", "id_amortizacion_cabeza='$_id_amortizacion_cabeza' AND numero_cuota_amortizacion_detalle = '0'");
 					        		$camortizacion->UpdateBy("plazo_meses_amortizacion_cabeza='$numero'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
+					        		$camortizacion->UpdateBy("total_deuda='$recalcular'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
 					        		
 					        		
 					        		
@@ -612,8 +641,55 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 											        	
 					        	
 					        	
+					        }elseif($_capital_pagado_recaudacion < "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
+					        
+					        	
+					        	$capital = $_pagos_amortizacion_detalle - $_capital_pagado_recaudacion;
+					        	$cuota = $_numero_cuota_amortizacion_detalle + 1;
+					        	
+					        	$resultSiguiente= $damortizacion->getBy("id_amortizacion_cabeza ='$_id_amortizacion_cabeza' AND id_entidades ='$_id_entidades' AND numero_cuota_amortizacion_detalle='$cuota'");
+					        	$_amortizacion_siguiente=$resultSiguiente[0]->amortizacion_amortizacion_detalle;
+					        	$_interes_siguiente=$resultSiguiente[0]->interes_amortizacion_detalle;
+					        	$amor = $_amortizacion_siguiente + $capital;
+					        	
+					        	$interes_dia = $_interes_amortizacion_detalle / 30;
+					        	$total_dia = $interes_dia * 30;
+					        	$saldo_pago = $amor + $total_dia + $_interes_siguiente;
+					        	$recalcular=$_total_deuda - $_pagos_amortizacion_detalle;
+					        	
+					        	
+					        	try
+					        	{
+					        	
+					        	$damortizacion->UpdateBy("estado_cancelado_amortizacion_detalle='TRUE'", "amortizacion_detalle", "id_amortizacion_cabeza='$_id_amortizacion_cabeza' AND numero_cuota_amortizacion_detalle = '$_numero_cuota_amortizacion_detalle' AND id_amortizacion_detalle='$_id_amortizacion_detalle'");
+					        	
+					        	
+					        	$funcion = "ins_recaudacion";
+					        	$parametros = "'$_id_clientes','$_id_entidades', '$_id_amortizacion_cabeza','$_capital_pagado_recaudacion','$_numero_cuota_amortizacion_detalle','$_fecha_pago_recaudacion', '$_id_amortizacion_detalle', '$_nombre_entidad_financiera_recaudacion', '$_numero_papeleta_recaudacion', '$_concepto_pago_amortizacion'";
+					        	$recaudacion->setFuncion($funcion);
+					        	$recaudacion->setParametros($parametros);
+					        	$resultado=$recaudacion->Insert();
+					        	
+					        	
+					        	$damortizacion->UpdateBy("pagos_amortizacion_detalle='$saldo_pago', interes_dias_amortizacion_detalle='$total_dia', amortizacion_amortizacion_detalle='$amor'", "amortizacion_detalle", "id_amortizacion_cabeza='$_id_amortizacion_cabeza' AND numero_cuota_amortizacion_detalle = '$cuota' AND estado_cancelado_amortizacion_detalle='FALSE' AND estado_final='FALSE'");
+					        	$camortizacion->UpdateBy("total_deuda='$recalcular'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
+					        	
+					        	
+					        	} catch (Exception $e)
+					        	{
+					        		$this->view("Error",array(
+					        				"resultado"=>"Eror al Actualizar Tabla de Amortizacion ->".$parametros
+					        		));
+					        		exit();
+					        	}
+					        	
+					        	
+					        	
 					        }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion > "$_fecha_pagos_amortizacion_detalle"){
 					        
+					        
+					        	
+					        	
 					        	
 					        	
 					        	
