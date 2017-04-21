@@ -237,15 +237,20 @@ $controladores=$_SESSION['controladores'];
 		  <li style="<?php echo getcontrolador("Clientes",$controladores) ?>">
 			<a href="index.php?controller=Clientes&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Clientes</span> </a>
 		  </li>
-		  <li style="<?php echo getcontrolador("ReporteTablaAmortizacion",$controladores) ?>">
+			<li style="<?php echo getcontrolador("RecalcularTablaAmortizacion",$controladores) ?>">
+			<a href="index.php?controller=RecalcularTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Registrar Pago</span> </a>
+		  </li>
+</ul>
+</li>
+<li class="dropdown" style="<?php echo getcontrolador("MenuReportes",$controladores) ?>">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-refresh" ><?php echo " Reportes" ;?> </span> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+          <li style="<?php echo getcontrolador("ReporteTablaAmortizacion",$controladores) ?>">
 			<a href="index.php?controller=ReporteTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Reporte Tabla Amortización</span> </a>
 			</li>
     	   <li style="<?php echo getcontrolador("ReporteRecaudacion",$controladores) ?>">
 			<a href="index.php?controller=ReporteRecaudacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Reporte Recaudacion</span> </a>
 			</li>
-			<li style="<?php echo getcontrolador("RecalcularTablaAmortizacion",$controladores) ?>">
-			<a href="index.php?controller=RecalcularTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Registrar Pago</span> </a>
-		  </li>
 		  <li style="<?php echo getcontrolador("ReporteDeuda",$controladores) ?>">
 			<a href="index.php?controller=ReporteDeuda&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Reporte de Deudas</span> </a>
 			</li>
