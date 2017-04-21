@@ -448,7 +448,34 @@ class TablaAmortizacionController extends ControladorBase{
 				}
 				
 				$camortizacion->UpdateBy("total_deuda='$_capital_prestado_amortizacion_cabeza'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
-					
+				
+				
+				if(isset($_id_amortizacion_cabeza))
+				{
+				
+				
+				
+					$parametros = array();
+					$parametros['id_entidades']=$_id_entidades;
+					$parametros['id_amortizacion_cabeza']=$_id_amortizacion_cabeza;
+				
+				
+					//aqui poner la pagina
+				
+					$pagina="conTablaAmortizacionIndividual.aspx";
+				
+					$conexion_rpt = array();
+					$conexion_rpt['pagina']=$pagina;
+					//$conexion_rpt['port']="59584";
+				
+					$this->view("ReporteRpt", array(
+							"parametros"=>$parametros,"conexion_rpt"=>$conexion_rpt
+					));
+				
+				
+				}
+				
+				
 				
 		}
    			catch (Exception $e)
