@@ -145,25 +145,14 @@ class TablaAmortizacionController extends ControladorBase{
 						
 						//$resultAmortizacion=$this->tablaAmortizacion($saldo_capital, $numero_cuotas, $fecha_corte, $total );
 						$resultAmortizacion=$this->tablaAmortizacion($_capital_prestado_amortizacion_cabeza, $numero_cuotas, $interes_mensual, $valor_cuota, $fecha_corte, $_tasa_interes_amortizacion_cabeza);
-							
 						
 				}
-				
-				
-				
-				
-				
-				
-				
 				
 				$this->view("TablaAmortizacion",array(
 						'resultRes'=>$resultRes,'resultDatos'=>$resultDatos,'resultAmortizacion'=>$resultAmortizacion,'resultRubros'=>$resultRubros,'resultCre'=>$resultCre,
 						'valor_cuota'=>$valor_cuota,'interes_mensual'=> $interes_mensual,'plazo_dias'=>$plazo_dias,'cant_cuotas'=>$cant_cuotas,'tasa_mora'=>$tasa_mora ,'mora_mensual'=>$mora_mensual
-						
-					    
 				));
 		
-				
 				
 			}
 			
@@ -414,8 +403,6 @@ class TablaAmortizacionController extends ControladorBase{
 				try
 				{
 					
-					
-					
 					$resultCabeza = $camortizacion->getBy("numero_credito_amortizacion_cabeza ='$numero_credito_amortizacion_cabeza' AND id_entidades ='$_id_entidades' AND numero_pagare_amortizacion_cabeza = '$numero_pagare_amortizacion_cabeza' AND id_fc_clientes='$id_fc_clientes'");
 					$_id_amortizacion_cabeza=$resultCabeza[0]->id_amortizacion_cabeza;
 					
@@ -426,8 +413,6 @@ class TablaAmortizacionController extends ControladorBase{
 					$_pagos_amortizacion_detalle = $res[0]['pagos'];
 					$_fecha_pagos_amortizacion_detalle = $res[0]['fecha_pago'];
 					 
-					
-						
 						
 					$funcion = "ins_amortizacion_detalle";
 					$parametros = "'$_id_amortizacion_cabeza','$_id_entidades','$_numero_cuota_amortizacion_detalle', '$_saldo_inicial_amortizacion_detalle', '$_interes_amortizacion_detalle', '$_amortizacion_amortizacion_detalle', '$_pagos_amortizacion_detalle', '$_fecha_pagos_amortizacion_detalle'";
@@ -453,14 +438,11 @@ class TablaAmortizacionController extends ControladorBase{
 				if(isset($_id_amortizacion_cabeza))
 				{
 				
-				
-				
 					$parametros = array();
 					$parametros['id_entidades']=$_id_entidades;
 					$parametros['id_amortizacion_cabeza']=$_id_amortizacion_cabeza;
 				
-				
-					//aqui poner la pagina
+				    //aqui poner la pagina
 				
 					$pagina="conTablaAmortizacionIndividual.aspx";
 				
@@ -475,8 +457,6 @@ class TablaAmortizacionController extends ControladorBase{
 				
 				}
 				
-				
-				
 		}
    			catch (Exception $e)
    			{
@@ -485,15 +465,10 @@ class TablaAmortizacionController extends ControladorBase{
    
    			}
 		
-		
-	
 	}
 	$this->redirect("TablaAmortizacion","index")	;
 
 	}
-	
-	
-	
 	
 	
 	
