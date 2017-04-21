@@ -396,6 +396,7 @@ class TablaAmortizacionController extends ControladorBase{
 			$resultado=$camortizacion->Insert();
 			
 			
+			
 			foreach($resultAmortizacion['tabla'] as $res)
 			{
 				 
@@ -435,6 +436,10 @@ class TablaAmortizacionController extends ControladorBase{
 					}	
 					
 				}
+				
+				$camortizacion->UpdateBy("total_deuda='$_capital_prestado_amortizacion_cabeza'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
+					
+				
 		}
    			catch (Exception $e)
    			{
