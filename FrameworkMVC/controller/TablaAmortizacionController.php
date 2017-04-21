@@ -25,7 +25,10 @@ class TablaAmortizacionController extends ControladorBase{
         $mora_mensual = 0;
         $valor_cuota = 0;
         
-        
+        $_id_usuarios= $_SESSION['id_usuarios'];
+        $usuarios = new UsuariosModel();
+        $resultEnt = $usuarios->getBy("id_usuarios ='$_id_usuarios'");
+        $_id_entidades=$resultEnt[0]->id_entidades;
         
         $tipo_creditos = new TipoCreditosModel();
         $resultCre = $tipo_creditos->getAll("nombre_tipo_creditos");
@@ -36,7 +39,7 @@ class TablaAmortizacionController extends ControladorBase{
 			$permisos_rol = new PermisosRolesModel();
 			$nombre_controladores = "TablaAmortizacion";
 			$id_rol= $_SESSION['id_rol'];
-			$resultPer = $clientes->getPermisosVer("   controladores.nombre_controladores = '$nombre_controladores' AND permisos_rol.id_rol = '$id_rol' " );
+			$resultPer = $clientes->getPermisosVer("controladores.nombre_controladores = '$nombre_controladores' AND permisos_rol.id_rol = '$id_rol' " );
 			
 			if (!empty($resultPer))
 			{
@@ -48,30 +51,37 @@ class TablaAmortizacionController extends ControladorBase{
 				{
 				  
 					$identificacion=$_POST['ruc_clientes'];
+					$razon_social=$_POST['razon_social_clientes'];
+					$numero_operacion=$_POST['numero_operacion'];
 						
-					if ($identificacion!=""){
+						if ($identificacion!="" || $razon_social!="" || $numero_operacion!=""  ){
 					
 						$columnas = "fc_clientes.id_clientes,
 								  fc_clientes.ruc_clientes,
 								  fc_clientes.razon_social_clientes,
+								fc_clientes.numero_operacion,
 								  entidades.nombre_entidades";
 				
 						$tablas=" public.fc_clientes,
   							public.entidades";
 				
-						$where="entidades.id_entidades = fc_clientes.id_entidades";
+						$where="entidades.id_entidades = fc_clientes.id_entidades AND entidades.id_entidades= '$_id_entidades'";
 				
 						$id="fc_clientes.id_clientes";
 				
 				
 						$where_0 = "";
+						$where_1 = "";
+						$where_2 = "";
 				
 				
 						if($identificacion!=""){$where_0=" AND fc_clientes.ruc_clientes='$identificacion'";}
-				
+						if($razon_social!=""){$where_1=" AND fc_clientes.razon_social_clientes LIKE '%$razon_social%'";}
+						if($numero_operacion!=""){$where_2=" AND fc_clientes.numero_operacion ='$numero_operacion'";}
+						
 				
 							
-						$where_to  = $where . $where_0;
+						$where_to  = $where . $where_0 . $where_1. $where_2;
 							
 						$resultRes = $clientes->getCondiciones($columnas, $tablas, $where_to, $id);
 							

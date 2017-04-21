@@ -30,12 +30,13 @@
 
 				var ruc_clientes = $("#ruc_clientes").val();
 				var razon_social_clientes = $("#razon_social_clientes").val();
+                var numero_operacion = $("#numero_operacion").val();
 				
 				
 
-				if (ruc_clientes == "" &&  razon_social_clientes == "")
+				if (ruc_clientes == "" &&  razon_social_clientes == "" &&  numero_operacion == "")
 				{
-					$("#mensaje_razon_social_clientes").text("Ingrese una Cedula o un Nombre");
+					$("#mensaje_razon_social_clientes").text("Ingrese un # Operación, Cedula o un Nombre");
 		    		$("#mensaje_razon_social_clientes").fadeIn("slow"); //Muestra mensaje de error
 		            return false;
 				}
@@ -55,7 +56,11 @@
 					 
 					  return true;
 				    });
-			 
+				 $( "#numero_operacion" ).focus(function() {
+					 $("#mensaje_razon_social_clientes").fadeOut("slow");
+					 
+					  return true;
+				    });
 			 
         });
 		</script>
@@ -396,8 +401,13 @@ era=rbutton.checked;
 	         <div class="panel-body">
 	         
   			 <div class="row">
-  			
   			 <div class="form-group" style="margin-top: 25px;">
+		    	<div class="col-xs-3 col-md-3" style="text-align: center;">
+			  	 <label for="numero_operacion" class="control-label">Nro. Operación:</label>
+			  	<input type="text"  name="numero_operacion" id="numero_operacion" value=""  class="form-control"/> 
+			    </div>
+            	</div>
+  			 <div class="form-group" >
   			
 		    	<div class="col-xs-2 col-md-2" style="text-align: center;">
 			  	 <label for="ruc_clientes" class="control-label">Nro. Identificación:</label>
@@ -435,8 +445,8 @@ era=rbutton.checked;
                     <th style="color:#456789;font-size:80%;"></th>
 		            <th style="color:#456789;font-size:80%;"><b>Ruc</b></th>
 		    		<th style="color:#456789;font-size:80%;"><b>Nombre</b></th>
+		    		<th style="color:#456789;font-size:80%;"><b># Operación</b></th>
 		    		<th style="color:#456789;font-size:80%;"><b># Crédito</b></th>
-		    		<th style="color:#456789;font-size:80%;"><b># Pagare</b></th>
 		    		<th style="color:#456789;font-size:80%;"><b>Tipo Crédito</b></th>
 		    		<th style="color:#456789;font-size:80%;"><b>Capital Prestado</b></th>
 		    		<th style="color:#456789;font-size:80%;"><b>Taza</b></th>
@@ -452,7 +462,7 @@ era=rbutton.checked;
 	        		   <td style="color:#000000;font-size:80%;"> <?php echo $res->ruc_clientes; ?>     </td> 
 		               <td style="color:#000000;font-size:80%;"> <?php echo $res->razon_social_clientes; ?>  </td>
 		               <td style="color:#000000;font-size:80%;"> <?php echo $res->numero_credito_amortizacion_cabeza; ?>  </td>
-		               <td style="color:#000000;font-size:80%;"> <?php echo $res->numero_pagare_amortizacion_cabeza; ?>  </td>
+		               <td style="color:#000000;font-size:80%;"> <?php echo $res->numero_operacion; ?>  </td>
 		               <td style="color:#000000;font-size:80%;"> <?php echo $res->nombre_tipo_creditos; ?>  </td>
 		               <td style="color:#000000;font-size:80%;"> <?php echo $res->capital_prestado_amortizacion_cabeza; ?>  </td>
 		               <td style="color:#000000;font-size:80%;"> <?php echo $res->tasa_interes_amortizacion_cabeza; ?>  </td>

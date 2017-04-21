@@ -29,14 +29,14 @@
 
 			$("#buscar").click(function(){
 
-				var ruc_clientes = $("#ruc_clientes").val();
-				var razon_social_clientes = $("#razon_social_clientes").val();
+			
+				var numero_operacion = $("#numero_operacion").val();
 				
 				
 
-				if (ruc_clientes == "" &&  razon_social_clientes == "")
+				if (numero_operacion == "")
 				{
-					$("#mensaje_razon_social_clientes").text("Ingrese una Cedula o un Nombre");
+					$("#mensaje_razon_social_clientes").text("Ingrese un # Operación");
 		    		$("#mensaje_razon_social_clientes").fadeIn("slow"); //Muestra mensaje de error
 		            return false;
 				}
@@ -45,18 +45,12 @@
 				});
 
 			
-				 $( "#razon_social_clientes" ).focus(function() {
-				 $("#mensaje_razon_social_clientes").fadeOut("slow");
-				 
-				  return true;
-			    });
-
-				 $( "#ruc_clientes" ).focus(function() {
+				
+				 $( "#numero_operacion" ).focus(function() {
 					 $("#mensaje_razon_social_clientes").fadeOut("slow");
 					 
 					  return true;
 				    });
-			 
 			 
         });
 		</script>
@@ -215,9 +209,11 @@
  $sel_interes_mora_mensual_amortizacion_cabeza="";
  $sel_fecha_amortizacion_cabeza="";
  $sel_id_fc_clientes="";
+ $sel_numero_operacion="";
  
  if($_SERVER['REQUEST_METHOD']=='POST' )
  {
+ 	$sel_numero_operacion=$_POST['numero_operacion'];
  	$sel_ruc_clientes=$_POST['ruc_clientes'];
  	$sel_id_fc_clientes=$_POST['id_fc_clientes'];
  	$sel_razon_social_clientes=$_POST['razon_social_clientes'];
@@ -275,9 +271,16 @@
 	         <div class="panel-body">
   			 <div class="row">
   			 <div class="form-group" style="margin-top: 25px;">
+		    	<div class="col-xs-3 col-md-3" style="text-align: center;">
+			  	 <label for="numero_operacion" class="control-label">Nro. Operación:</label>
+			  	<input type="text"  name="numero_operacion" id="numero_operacion" value="<?php if ($sel_numero_operacion!="")  {echo $sel_numero_operacion;} else { if (!empty($resultRes)) {  foreach($resultRes as $resEdit) {echo $resEdit->numero_operacion;} }  }?>"  class="form-control"/> 
+			    <div id="mensaje_razon_social_clientes" class="errores"></div>
+			    </div>
+            	</div>
+  			   <div class="form-group">
 		    	<div class="col-xs-2 col-md-2" style="text-align: center;">
 			  	 <label for="ruc_clientes" class="control-label">Nro. Identificación:</label>
-			  	<input type="text"  name="ruc_clientes" id="ruc_clientes" value="<?php if ($sel_ruc_clientes!="")  {echo $sel_ruc_clientes;} else { if (!empty($resultRes)) {  foreach($resultRes as $resEdit) {echo $resEdit->ruc_clientes;} }  }?>" onkeypress="return numeros(event)" class="form-control"/> 
+			  	<input type="text"  name="ruc_clientes" id="ruc_clientes" value="<?php if (!empty($resultRes)) {  foreach($resultRes as $resEdit) {echo $resEdit->ruc_clientes;} }else {echo $sel_ruc_clientes; }?>" onkeypress="return numeros(event)" class="form-control" readonly/> 
 			   <input type="hidden"  name="id_fc_clientes" id="id_fc_clientes" value="<?php if (!empty($resultRes)) {  foreach($resultRes as $resEdit) {echo $resEdit->id_clientes;} } else  {echo $sel_id_fc_clientes;} ?>" class="form-control"/> 
 			   
             	</div>
@@ -285,8 +288,8 @@
 		   		<div class="form-group">
 		   		<div class="col-xs-4 col-md-4" style="text-align: center;">
 			  	<label for="razon_social_clientes" class="control-label">Razón Social:</label>
-			  	<input type="text"  name="razon_social_clientes" id="razon_social_clientes" value="<?php if (!empty($resultRes)) {  foreach($resultRes as $resEdit) {echo $resEdit->razon_social_clientes;} }  else {echo $sel_razon_social_clientes;} ?>" class="form-control"/> 
-			   	<div id="mensaje_razon_social_clientes" class="errores"></div>
+			  	<input type="text"  name="razon_social_clientes" id="razon_social_clientes" value="<?php if (!empty($resultRes)) {  foreach($resultRes as $resEdit) {echo $resEdit->razon_social_clientes;} }  else {echo $sel_razon_social_clientes;} ?>" class="form-control" readonly/> 
+			   	
             	</div>
               </div>
 		   	

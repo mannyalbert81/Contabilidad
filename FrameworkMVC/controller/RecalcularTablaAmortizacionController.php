@@ -53,10 +53,9 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 				  
 					$identificacion=$_POST['ruc_clientes'];
 					$razon_social=$_POST['razon_social_clientes'];
-				
+				    $numero_operacion=$_POST['numero_operacion'];
 					
-						
-					if ($identificacion!="" || $razon_social!="" ){
+					if ($identificacion!="" || $razon_social!="" || $numero_operacion!=""  ){
 					
 						$columnas = "fc_clientes.id_clientes, 
 									  fc_clientes.ruc_clientes, 
@@ -64,7 +63,8 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 									  fc_clientes.direccion_clientes, 
 									  fc_clientes.telefono_clientes, 
 									  fc_clientes.celular_clientes, 
-									  fc_clientes.email_clientes, 
+									  fc_clientes.email_clientes,
+								      fc_clientes.numero_operacion,
 									  entidades.id_entidades, 
 									  entidades.nombre_entidades, 
 									  amortizacion_cabeza.id_amortizacion_cabeza, 
@@ -100,11 +100,16 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 				
 						$where_0 = "";
 						$where_1 = "";
+						$where_2 = "";
 				
 				
 						if($identificacion!=""){$where_0=" AND fc_clientes.ruc_clientes='$identificacion'";}
 						if($razon_social!=""){$where_1=" AND fc_clientes.razon_social_clientes LIKE '%$razon_social%'";}
-				
+						if($numero_operacion!=""){$where_2=" AND fc_clientes.numero_operacion ='$numero_operacion'";}
+						
+						
+							
+						$where_to  = $where . $where_0 . $where_1. $where_2;
 				
 							
 						$where_to  = $where . $where_0 . $where_1;
