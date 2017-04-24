@@ -113,7 +113,7 @@
   
        <!-- empieza el form --> 
        
-      <form action="<?php echo $helper->url("ReporteTablaAmortizacion","index"); ?>" method="post" enctype="multipart/form-data"  class="col-lg-12" target="_blank">
+      <form action="<?php echo $helper->url("ReporteDeuda","index"); ?>" method="post" enctype="multipart/form-data"  class="col-lg-12" target="_blank">
          
          <!-- comienxza busqueda  -->
          <div class="col-lg-12" style="margin-top: 10px">

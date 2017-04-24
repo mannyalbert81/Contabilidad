@@ -46,9 +46,10 @@ class ReporteDeudaController extends ControladorBase{
 					$numero_credito_amortizacion_cabeza=$_POST['numero_credito_amortizacion_cabeza'];
 					$numero_pagare_amortizacion_cabeza=$_POST['numero_pagare_amortizacion_cabeza'];
 										
-					$columnas = "   amortizacion_cabeza.id_amortizacion_cabeza, 
+					$columnas = "amortizacion_cabeza.id_amortizacion_cabeza, 
 									  amortizacion_cabeza.numero_credito_amortizacion_cabeza, 
 									  amortizacion_cabeza.numero_pagare_amortizacion_cabeza, 
+										fc_clientes.id_clientes,
 									  fc_clientes.ruc_clientes, 
 									  fc_clientes.razon_social_clientes, 
 									  fc_clientes.direccion_clientes, 
@@ -148,10 +149,6 @@ class ReporteDeudaController extends ControladorBase{
 							$html.='<th>Nro. Pagaré</th>';
 							$html.='<th>Ruc</th>';
 							$html.='<th>Razon</th>';
-							$html.='<th>Dirección</th>';
-							$html.='<th>Teléfono</th>';
-							$html.='<th>Celular</th>';
-							$html.='<th>Email</th>';
 							$html.='<th>Tipo Crédito</th>';
 							$html.='<th>Capital Prestado</th>';	
 							$html.='<th>Total Deuda</th>';
@@ -171,10 +168,6 @@ class ReporteDeudaController extends ControladorBase{
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->numero_pagare_amortizacion_cabeza.'</td>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->ruc_clientes.'</td>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->razon_social_clientes.'</td>';
-								$html.='<td style="color:#000000;font-size:80%;">'.$res->direccion_clientes.'</td>';
-								$html.='<td style="color:#000000;font-size:80%;">'.$res->telefono_clientes.'</td>';
-								$html.='<td style="color:#000000;font-size:80%;">'.$res->celular_clientes.'</td>';
-								$html.='<td style="color:#000000;font-size:80%;">'.$res->email_clientes.'</td>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->nombre_tipo_creditos.'</td>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->capital_prestado_amortizacion_cabeza.'</td>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->total_deuda.'</td>';
@@ -277,7 +270,7 @@ class ReporteDeudaController extends ControladorBase{
 	
 	
 			$parametros = array();
-			$parametros['id_entidades']=isset($_GET['id_entidades'])?trim($_GET['id_entidades']):'';
+		
 			$parametros['id_amortizacion_cabeza']=isset($_GET['id_amortizacion_cabeza'])?trim($_GET['id_amortizacion_cabeza']):'';
 	
 	
