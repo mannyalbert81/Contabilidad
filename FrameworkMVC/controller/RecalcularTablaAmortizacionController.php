@@ -55,7 +55,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					$razon_social=$_POST['razon_social_clientes'];
 				    $numero_operacion=$_POST['numero_operacion'];
 					
-					if ($identificacion!="" || $razon_social!="" || $numero_operacion!=""  ){
+					if ($numero_operacion!=""  ){
 					
 						$columnas = "fc_clientes.id_clientes, 
 									  fc_clientes.ruc_clientes, 
@@ -103,16 +103,24 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 						$where_2 = "";
 				
 				
-						if($identificacion!=""){$where_0=" AND fc_clientes.ruc_clientes='$identificacion'";}
-						if($razon_social!=""){$where_1=" AND fc_clientes.razon_social_clientes LIKE '%$razon_social%'";}
-						if($numero_operacion!=""){$where_2=" AND fc_clientes.numero_operacion ='$numero_operacion'";}
+						if($identificacion!="")
+						{
+							$where_0=" AND fc_clientes.ruc_clientes='$identificacion'";
+						}
+						if($razon_social!="")
+						{
+							$where_1=" AND fc_clientes.razon_social_clientes LIKE '%$razon_social%'";
+						}
+						if($numero_operacion!="")
+						{
+							$where_2=" AND fc_clientes.numero_operacion ='$numero_operacion'";
+						}
 						
 						
 							
 						$where_to  = $where . $where_0 . $where_1. $where_2;
 				
 							
-						$where_to  = $where . $where_0 . $where_1;
 							
 						$resultRes = $clientes->getCondiciones($columnas, $tablas, $where_to, $id);
 							
@@ -662,7 +670,8 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	$interes_dia = $_interes_amortizacion_detalle / 30;
 					        	$total_dia = $interes_dia * 30;
 					        	$saldo_pago = $amor + $total_dia + $_interes_siguiente;
-					        	$recalcular=$_total_deuda - $_pagos_amortizacion_detalle;
+					        	//MANUEL
+					        	$recalcular=$_total_deuda - $_capital_pagado_recaudacion;
 					        	
 					        	
 					        	try
