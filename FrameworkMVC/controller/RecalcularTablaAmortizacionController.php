@@ -698,13 +698,9 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	
 					        	
 					        	
-					        }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion > "$_fecha_pagos_amortizacion_detalle"){
-					        
-					        
-					        	
-					        	
-					        	
-					        	
+					        }elseif 
+					        (
+					        		$_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion > "$_fecha_pagos_amortizacion_detalle"){
 					        	
 					        }
 					        
