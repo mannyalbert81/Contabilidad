@@ -254,6 +254,10 @@ $controladores=$_SESSION['controladores'];
 		  <li style="<?php echo getcontrolador("ReporteDeuda",$controladores) ?>">
 			<a href="index.php?controller=ReporteDeuda&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Reporte de Deudas</span> </a>
 			</li>
+			<li style="<?php echo getcontrolador("ReporteTablaAmortizacionPagos",$controladores) ?>">
+			<a href="index.php?controller=ReporteTablaAmortizacionPagos&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Reporte Tabla Amortización - Pagos</span> </a>
+			</li>
+    	   
 		  
 </ul>
 </li>
