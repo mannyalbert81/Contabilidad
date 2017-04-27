@@ -230,6 +230,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        $_saldo_inicial_amortizacion_detalle=$resultCabeza[0]->saldo_inicial_amortizacion_detalle;
 					        $_amortizacion_amortizacion_detalle=$resultCabeza[0]->amortizacion_amortizacion_detalle;
 					        
+					       
 					        
 					        if($_capital_pagado_recaudacion < "$_interes_amortizacion_detalle"){
 					        	
@@ -238,8 +239,6 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        
 					        if($_capital_pagado_recaudacion < "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
 					        
-					        	
-					        	
 					        	
 					        	$numero_cuota= $_numero_cuota_amortizacion_detalle;
 					        	$saldo_inicial_amortizacion_detalle = $_saldo_inicial_amortizacion_detalle;
