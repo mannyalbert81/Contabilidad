@@ -478,8 +478,7 @@ era=rbutton.checked;
 		<div class="row">
 			<div class="col-xs-12 col-md-12 col-lg-12" style="text-align: center;" > 
             <div class="form-group">
-            					   
-            					   <input type="submit" id="Recuperar" name="Recuperar"  value="Recuperar" class="btn btn-warning" style="margin-top: 23px;"/> 	
+            	 <input type="submit" id="Recuperar" name="Recuperar"  value="Recuperar" class="btn btn-warning" style="margin-top: 23px;"/> 	
 		     
             </div>
             </div>
@@ -644,7 +643,7 @@ era=rbutton.checked;
 	    		<th style="color:#456789;font-size:80%;"><b>Cuota</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Saldo Inicial</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Interes Normal</b></th>
-	    		<th style="color:#456789;font-size:80%;"><b>Interes Días</b></th>
+	    		<th style="color:#456789;font-size:80%;"><b>Interes Mora</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Amortización</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Pagos</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Fecha Pago</b></th>

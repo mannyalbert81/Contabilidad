@@ -8,7 +8,7 @@
       <head>
       
         <meta charset="utf-8"/>
-        <title>Reporte de Deuda- contabilidad 2016</title>
+        <title>Reporte Tabla Amortizacion Pagos - contabilidad 2016</title>
         
        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
           <link rel="stylesheet" href="view/css/bootstrap.css">
@@ -41,13 +41,13 @@
 
 		$("#buscar").click(function(){
 
-			load_deuda(1);
+			load_tabla_amortizacion_pagos(1);
 			
 			});
 	});
 
 	
-	function load_deuda(pagina){
+	function load_tabla_amortizacion_pagos(pagina){
 		//iniciar variables
 		var con_id_entidades=$("#id_entidades").val();
 		var con_ruc_clientes=$("#ruc_clientes").val();
@@ -66,18 +66,18 @@
 				  page:pagina
 				  };
 		 		
-		$("#deuda").fadeIn('slow');
+		$("#tabla_amortizacion_pagos").fadeIn('slow');
 		$.ajax({
-			url:"<?php echo $helper->url("ReporteDeuda","index");?>",
+			url:"<?php echo $helper->url("ReporteTablaAmortizacionPagos","index");?>",
             type : "POST",
             async: true,			
 			data: con_datos,
 			 beforeSend: function(objeto){
-			$("#deuda").html('<img src="view/images/ajax-loader.gif"> Cargando...');
+			$("#tabla_amortizacion_pagos").html('<img src="view/images/ajax-loader.gif"> Cargando...');
 			},
 			success:function(data){
-				$(".div_deuda").html(data).fadeIn('slow');
-				$("#deuda").html("");
+				$(".div_tabla_amortizacion_pagos").html(data).fadeIn('slow');
+				$("#tabla_amortizacion_pagos").html("");
 			}
 		})
 	}
@@ -113,12 +113,12 @@
   
        <!-- empieza el form --> 
        
-      <form action="<?php echo $helper->url("ReporteDeuda","index"); ?>" method="post" enctype="multipart/form-data"  class="col-lg-12" target="_blank">
+      <form action="<?php echo $helper->url("ReporteTablaAmortizacionPagos","index"); ?>" method="post" enctype="multipart/form-data"  class="col-lg-12" target="_blank">
          
          <!-- comienxza busqueda  -->
          <div class="col-lg-12" style="margin-top: 10px">
          
-       	 <h4 style="color:#ec971f;">Reporte de Deuda</h4>
+       	 <h4 style="color:#ec971f;">Reporte Tabla Amortizacion Pagos</h4>
        	 
        	 
        	 <div class="panel panel-default">
@@ -186,8 +186,8 @@
 		
 		 <h4 style="color:#ec971f;"></h4>
 			  <div>					
-					<div id="deuda" style="position: absolute;	text-align: center;	top: 10px;	width: 100%;display:none;"></div><!-- Carga gif animado -->
-					<div class="div_deuda" >
+					<div id="tabla_amortizacion_pagos" style="position: absolute;	text-align: center;	top: 10px;	width: 100%;display:none;"></div><!-- Carga gif animado -->
+					<div class="div_tabla_amortizacion_pagos" >
 					
 					</div><!-- Datos ajax Final -->
 					

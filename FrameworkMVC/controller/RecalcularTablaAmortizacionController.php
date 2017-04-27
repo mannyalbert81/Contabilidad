@@ -55,7 +55,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					$razon_social=$_POST['razon_social_clientes'];
 				    $numero_operacion=$_POST['numero_operacion'];
 					
-					if ($identificacion!="" || $razon_social!="" || $numero_operacion!=""  ){
+					if ($numero_operacion!=""  ){
 					
 						$columnas = "fc_clientes.id_clientes, 
 									  fc_clientes.ruc_clientes, 
@@ -103,17 +103,23 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 						$where_2 = "";
 				
 				
-						if($identificacion!=""){$where_0=" AND fc_clientes.ruc_clientes='$identificacion'";}
-						if($razon_social!=""){$where_1=" AND fc_clientes.razon_social_clientes LIKE '%$razon_social%'";}
-						if($numero_operacion!=""){$where_2=" AND fc_clientes.numero_operacion ='$numero_operacion'";}
+						if($identificacion!="")
+						{
+							$where_0=" AND fc_clientes.ruc_clientes='$identificacion'";
+						}
+						if($razon_social!="")
+						{
+							$where_1=" AND fc_clientes.razon_social_clientes LIKE '%$razon_social%'";
+						}
+						if($numero_operacion!="")
+						{
+							$where_2=" AND fc_clientes.numero_operacion ='$numero_operacion'";
+						}
 						
 						
 							
 						$where_to  = $where . $where_0 . $where_1. $where_2;
 				
-							
-						$where_to  = $where . $where_0 . $where_1;
-							
 						$resultRes = $clientes->getCondiciones($columnas, $tablas, $where_to, $id);
 							
 					
@@ -649,20 +655,20 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	
 					        }elseif($_capital_pagado_recaudacion < "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion <= "$_fecha_pagos_amortizacion_detalle"){
 					        
-					        	
 					        	$capital = $_pagos_amortizacion_detalle - $_capital_pagado_recaudacion;
 					        	$cuota = $_numero_cuota_amortizacion_detalle + 1;
 					        	
 					        	$resultSiguiente= $damortizacion->getBy("id_amortizacion_cabeza ='$_id_amortizacion_cabeza' AND id_entidades ='$_id_entidades' AND numero_cuota_amortizacion_detalle='$cuota'");
 					        	$_amortizacion_siguiente=$resultSiguiente[0]->amortizacion_amortizacion_detalle;
+					        	$_saldo_inicial_siguiente=$resultSiguiente[0]->saldo_inicial_amortizacion_detalle;
 					        	$_interes_siguiente=$resultSiguiente[0]->interes_amortizacion_detalle;
 					        	$amor = $_amortizacion_siguiente + $capital;
+					        	$saldo_inicil_siguiente = $_saldo_inicial_siguiente + $capital;
 					        	
 					        	$interes_dia = $_interes_amortizacion_detalle / 30;
 					        	$total_dia = $interes_dia * 30;
 					        	$saldo_pago = $amor + $total_dia + $_interes_siguiente;
 					        	$recalcular=$_total_deuda - $_pagos_amortizacion_detalle;
-					        	
 					        	
 					        	try
 					        	{
@@ -677,7 +683,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	$resultado=$recaudacion->Insert();
 					        	
 					        	
-					        	$damortizacion->UpdateBy("pagos_amortizacion_detalle='$saldo_pago', interes_dias_amortizacion_detalle='$total_dia', amortizacion_amortizacion_detalle='$amor'", "amortizacion_detalle", "id_amortizacion_cabeza='$_id_amortizacion_cabeza' AND numero_cuota_amortizacion_detalle = '$cuota' AND estado_cancelado_amortizacion_detalle='FALSE' AND estado_final='FALSE'");
+					        	$damortizacion->UpdateBy("pagos_amortizacion_detalle='$saldo_pago', interes_dias_amortizacion_detalle='$total_dia', amortizacion_amortizacion_detalle='$amor' , saldo_inicial_amortizacion_detalle='$saldo_inicil_siguiente'         ", "amortizacion_detalle", "id_amortizacion_cabeza='$_id_amortizacion_cabeza' AND numero_cuota_amortizacion_detalle = '$cuota' AND estado_cancelado_amortizacion_detalle='FALSE' AND estado_final='FALSE'");
 					        	$camortizacion->UpdateBy("total_deuda='$recalcular'", "amortizacion_cabeza", "id_amortizacion_cabeza='$_id_amortizacion_cabeza'");
 					        	
 					        	
@@ -691,13 +697,9 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        	
 					        	
 					        	
-					        }elseif ($_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion > "$_fecha_pagos_amortizacion_detalle"){
-					        
-					        
-					        	
-					        	
-					        	
-					        	
+					        }elseif 
+					        (
+					        		$_capital_pagado_recaudacion > "$_pagos_amortizacion_detalle" && $_fecha_pago_recaudacion > "$_fecha_pagos_amortizacion_detalle"){
 					        	
 					        }
 					        

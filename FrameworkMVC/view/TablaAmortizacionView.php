@@ -469,7 +469,7 @@
 	         <tr >
 	    		<th style="color:#456789;font-size:80%;"><b>Cuota</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Saldo Inicial</b></th>
-	    		<th style="color:#456789;font-size:80%;"><b>Interes</b></th>
+	    		<th style="color:#456789;font-size:80%;"><b>Interes Normal</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Amortizacion</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Pagos</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Fecha Pago</b></th>

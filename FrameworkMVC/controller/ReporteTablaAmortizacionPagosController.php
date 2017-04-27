@@ -1,6 +1,6 @@
 <?php
 
-class ReporteDeudaController extends ControladorBase{
+class ReporteTablaAmortizacionPagosController extends ControladorBase{
 
 	public function __construct() {
 		parent::__construct();
@@ -16,7 +16,7 @@ class ReporteDeudaController extends ControladorBase{
 		$resultSet="";
 		$registrosTotales = 0;
 		$arraySel = "";
-		$reporte_deuda = new ReporteDeudaModel(); 
+		$tabla_amortizacion_pagos = new TablaAmortizacionModel(); 
 		$usuarios = new UsuariosModel();
 		
 		$entidades = new EntidadesModel();
@@ -31,7 +31,7 @@ class ReporteDeudaController extends ControladorBase{
 		if (isset(  $_SESSION['usuario_usuarios']) )
 		{
 			$permisos_rol = new PermisosRolesModel();
-			$nombre_controladores = "ReporteDeuda";
+			$nombre_controladores = "ReporteTablaAmortizacionPagos";
 			$id_rol= $_SESSION['id_rol'];
 			$resultPer = $usuarios->getPermisosVer("   controladores.nombre_controladores = '$nombre_controladores' AND permisos_rol.id_rol = '$id_rol' " );
 	
@@ -47,36 +47,39 @@ class ReporteDeudaController extends ControladorBase{
 					$numero_pagare_amortizacion_cabeza=$_POST['numero_pagare_amortizacion_cabeza'];
 										
 					$columnas = "amortizacion_cabeza.id_amortizacion_cabeza, 
-									  amortizacion_cabeza.numero_credito_amortizacion_cabeza, 
-									  amortizacion_cabeza.numero_pagare_amortizacion_cabeza, 
-										fc_clientes.id_clientes,
-									  fc_clientes.ruc_clientes, 
-									  fc_clientes.razon_social_clientes, 
-									  fc_clientes.direccion_clientes, 
-									  fc_clientes.telefono_clientes, 
-									  fc_clientes.celular_clientes, 
-									  fc_clientes.email_clientes, 
-									  tipo_creditos.nombre_tipo_creditos, 
-									  amortizacion_cabeza.capital_prestado_amortizacion_cabeza, 
-									  entidades.ruc_entidades, 
-									  entidades.nombre_entidades, 
-									  entidades.telefono_entidades, 
-									  entidades.direccion_entidades, 
-									  entidades.ciudad_entidades, 
-									  entidades.logo_entidades, 
-									  amortizacion_cabeza.total_deuda";
-																					
+								  amortizacion_cabeza.numero_credito_amortizacion_cabeza, 
+								  amortizacion_cabeza.numero_pagare_amortizacion_cabeza, 
+								  fc_clientes.ruc_clientes, 
+								  fc_clientes.razon_social_clientes, 
+								  tipo_creditos.nombre_tipo_creditos, 
+								  amortizacion_cabeza.capital_prestado_amortizacion_cabeza, 
+								  amortizacion_cabeza.tasa_interes_amortizacion_cabeza, 
+								  amortizacion_cabeza.plazo_meses_amortizacion_cabeza, 
+								  amortizacion_cabeza.plazo_dias_amortizacion_cabeza, 
+								  intereses.valor_intereses, 
+								  amortizacion_cabeza.fecha_amortizacion_cabeza, 
+								  amortizacion_cabeza.cantidad_cuotas_amortizacion_cabeza, 
+								  amortizacion_cabeza.interes_normal_mensual_amortizacion_cabeza, 
+								  amortizacion_cabeza.interes_mora_mensual_amortizacion_cabeza, 
+								  entidades.nombre_entidades,
+							  	  recaudacion.capital_pagado_recaudacion, 
+  								  recaudacion.fecha_pago_recaudacion";
+					
 	
 	
-					$tablas=" 	   public.fc_clientes, 
-									  public.amortizacion_cabeza, 
-									  public.tipo_creditos, 
-									  public.entidades";
-										
-					$where="    amortizacion_cabeza.id_fc_clientes = fc_clientes.id_clientes AND
-								  tipo_creditos.id_tipo_creditos = amortizacion_cabeza.id_tipo_creditos AND
-								  entidades.id_entidades = amortizacion_cabeza.id_entidades";
-																
+					$tablas=" 	public.amortizacion_cabeza, 
+								  public.fc_clientes, 
+								  public.tipo_creditos, 
+								  public.intereses, 
+								  public.recaudacion, 
+								  public.entidades";
+	
+					$where="fc_clientes.id_clientes = amortizacion_cabeza.id_fc_clientes AND
+							  tipo_creditos.id_tipo_creditos = amortizacion_cabeza.id_tipo_creditos AND
+							  intereses.id_intereses = amortizacion_cabeza.id_intereses AND
+							  entidades.id_entidades = amortizacion_cabeza.id_entidades AND
+							  amortizacion_cabeza.id_amortizacion_cabeza = recaudacion.id_amortizacion_cabeza";
+	
 					$id="fc_clientes.ruc_clientes";
 	
 	
@@ -111,7 +114,7 @@ class ReporteDeudaController extends ControladorBase{
 					if($action == 'ajax')
 					{
 						$html="";
-						$resultSet=$reporte_deuda->getCantidad("*", $tablas, $where_to);
+						$resultSet=$tabla_amortizacion_pagos->getCantidad("*", $tablas, $where_to);
 						$cantidadResult=(int)$resultSet[0]->total;
 							
 						$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page']))?$_REQUEST['page']:1;
@@ -123,7 +126,7 @@ class ReporteDeudaController extends ControladorBase{
 						$limit = " LIMIT   '$per_page' OFFSET '$offset'";
 							
 							
-						$resultSet=$reporte_deuda->getCondicionesPag($columnas, $tablas, $where_to, $id, $limit);
+						$resultSet=$tabla_amortizacion_pagos->getCondicionesPag($columnas, $tablas, $where_to, $id, $limit);
 							
 						$count_query   = $cantidadResult;
 							
@@ -131,9 +134,7 @@ class ReporteDeudaController extends ControladorBase{
 						
 						if ($cantidadResult>0)
 						{
-						
-							
-							
+								
 							//<th style="color:#456789;font-size:80%;"></th>
 						
 							$html.='<div class="pull-left">';
@@ -149,10 +150,20 @@ class ReporteDeudaController extends ControladorBase{
 							$html.='<th>Nro. Pagaré</th>';
 							$html.='<th>Ruc</th>';
 							$html.='<th>Razon</th>';
-							$html.='<th>Tipo Crédito</th>';
-							$html.='<th>Capital Prestado</th>';	
-							$html.='<th>Total Deuda</th>';
-							$html.='<th>Imprimir</th>';
+							$html.='<th>Tipo Crédito </th>';
+							$html.='<th>Cap. Prestado</th>';
+							$html.='<th>Tasa</th>';
+							$html.='<th>Plazo Meses</th>';
+							$html.='<th>Plazo Dias</th>';
+							$html.='<th>Valor Intereses</th>';
+							$html.='<th>Fecha</th>';
+							$html.='<th>Can. Cuotas</th>';
+							$html.='<th>Interes</th>';
+							$html.='<th>Mora</th>';
+							$html.='<th>Entidad</th>';
+							$html.='<th>Capital Pagado</th>';
+							$html.='<th>Fecha Pago</th>';
+							$html.='<th>Imprimir</th>';							
 							$html.='</tr>';
 							$html.='</thead>';
 							$html.='<tbody>';
@@ -161,7 +172,7 @@ class ReporteDeudaController extends ControladorBase{
 							{
 								//<td style="color:#000000;font-size:80%;"> <?php echo ;</td>
 						
-								
+									
 								$html.='<tr>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->id_amortizacion_cabeza.'</td>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->numero_credito_amortizacion_cabeza.'</td>';
@@ -170,9 +181,21 @@ class ReporteDeudaController extends ControladorBase{
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->razon_social_clientes.'</td>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->nombre_tipo_creditos.'</td>';
 								$html.='<td style="color:#000000;font-size:80%;">'.$res->capital_prestado_amortizacion_cabeza.'</td>';
-								$html.='<td style="color:#000000;font-size:80%;">'.$res->total_deuda.'</td>';
-								$html.='<td style="color:#000000;font-size:80%;"><span class="pull-right"><a href="index.php?controller=ReporteDeuda&action=ReporteDeudaIndividual&id_amortizacion_cabeza='. $res->id_amortizacion_cabeza .'" target="_blank"><i class="glyphicon glyphicon-print"></i></a></span></td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->tasa_interes_amortizacion_cabeza.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->plazo_meses_amortizacion_cabeza.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->plazo_dias_amortizacion_cabeza.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->valor_intereses.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->fecha_amortizacion_cabeza.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->cantidad_cuotas_amortizacion_cabeza.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->interes_normal_mensual_amortizacion_cabeza.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->interes_mora_mensual_amortizacion_cabeza.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->nombre_entidades.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->capital_pagado_recaudacion.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;">'.$res->fecha_pago_recaudacion.'</td>';
+								$html.='<td style="color:#000000;font-size:80%;"><span class="pull-right"><a href="index.php?controller=ReporteTablaAmortizacionPagos&action=ReporteTablaAmortizacionIndividualPagos&id_amortizacion_cabeza='. $res->id_amortizacion_cabeza .'" target="_blank"><i class="glyphicon glyphicon-print"></i></a></span></td>';
 								$html.='</tr>';
+									
+						
 						
 							}
 								
@@ -212,7 +235,7 @@ class ReporteDeudaController extends ControladorBase{
 						$parametros['numero_pagare_amortizacion_cabeza']=(isset($_POST['numero_pagare_amortizacion_cabeza']))?trim($_POST['numero_pagare_amortizacion_cabeza']):'';
 					
 						//para local 
-						$pagina="conReporteDeuda.aspx";
+						$pagina="conReporteTablaAmortizacionPagos.aspx";
 												
 						$conexion_rpt = array();
 						$conexion_rpt['pagina']=$pagina;
@@ -230,7 +253,7 @@ class ReporteDeudaController extends ControladorBase{
 		}
 	
 				
-				$this->view("ReporteDeuda",array(
+				$this->view("ReporteTablaAmortizacionPagos",array(
 						"resultSet"=>$resultSet, 
 						"resultEnt"=>$resultEnt 
 						
@@ -243,7 +266,7 @@ class ReporteDeudaController extends ControladorBase{
 			else
 			{
 				$this->view("Error",array(
-						"resultado"=>"No tiene Permisos de Acceso a Reporte de Deuda"
+						"resultado"=>"No tiene Permisos de Acceso a Reporte Tabla Amortizacion"
 	
 				));
 	
@@ -261,7 +284,7 @@ class ReporteDeudaController extends ControladorBase{
 		}
 	
 	}
-	public function ReporteDeudaIndividual()
+	public function ReporteTablaAmortizacionIndividualPagos()
 	{
 	
 		if(isset($_REQUEST['id_amortizacion_cabeza']))
@@ -270,13 +293,13 @@ class ReporteDeudaController extends ControladorBase{
 	
 	
 			$parametros = array();
-		
+			$parametros['id_entidades']=isset($_GET['id_entidades'])?trim($_GET['id_entidades']):'';
 			$parametros['id_amortizacion_cabeza']=isset($_GET['id_amortizacion_cabeza'])?trim($_GET['id_amortizacion_cabeza']):'';
 	
 	
 			//aqui poner la pagina
 	
-			$pagina="conReporteDeudaIndividual.aspx";
+			$pagina="conReporteTablaAmortizacionIndividualPagos.aspx";
 	
 			$conexion_rpt = array();
 			$conexion_rpt['pagina']=$pagina;
