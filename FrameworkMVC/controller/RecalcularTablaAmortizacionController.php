@@ -606,7 +606,7 @@ class RecalcularTablaAmortizacionController extends ControladorBase{
 					        				$_fecha_pagos_amortizacion_detalle_1 = $res[0]['fecha_pago'];
 					        		
 					        		
-					        				$funcion = "ins_amortizacion_detalle";
+					        				$funcion = "ins_amortizacion_detalle_uno";
 					        				$parametros = "'$_id_amortizacion_cabeza','$_id_entidades','$_numero_cuota_amortizacion_detalle_1', '$_saldo_inicial_amortizacion_detalle_1', '$_interes_amortizacion_detalle_1', '$_amortizacion_amortizacion_detalle_1', '$_pagos_amortizacion_detalle_1', '$_fecha_pagos_amortizacion_detalle_1'";
 					        				$damortizacion->setFuncion($funcion);
 					        				$damortizacion->setParametros($parametros);
