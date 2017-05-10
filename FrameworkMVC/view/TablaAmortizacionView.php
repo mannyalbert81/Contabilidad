@@ -408,7 +408,7 @@
 		 	<div class="col-xs-2 col-md-2">
 		    <div class="form-group">
 		    
-		     					  <label for="interes_normal_mensual_amortizacion_cabeza" class="control-label">Int. Mensual:</label>
+		     					  <label for="interes_normal_mensual_amortizacion_cabeza" class="control-label">Interes Mensual:</label>
                                   <input type="text" class="form-control" id="interes_normal_mensual_amortizacion_cabeza" name="interes_normal_mensual_amortizacion_cabeza" value="<?php if (!empty($interes_mensual)) { echo number_format($interes_mensual,4); } else { }?>"  placeholder="0.00" readonly>
                                   <span class="help-block"></span>
 		    </div>
@@ -470,7 +470,7 @@
 	    		<th style="color:#456789;font-size:80%;"><b>Cuota</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Saldo Inicial</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Interes Normal</b></th>
-	    		<th style="color:#456789;font-size:80%;"><b>Amortizacion</b></th>
+	    		<th style="color:#456789;font-size:80%;"><b>Amortización</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Pagos</b></th>
 	    		<th style="color:#456789;font-size:80%;"><b>Fecha Pago</b></th>
 	    		</tr>
