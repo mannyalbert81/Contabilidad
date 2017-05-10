@@ -387,7 +387,8 @@
             <div class="row">
 			<div class="col-xs-12 col-md-12 col-lg-12" style="text-align: center;" > 
             <div class="form-group">
-            					   <?php if(!empty($resultRes)){?>
+             					  <button type="submit" id="GenerarAutomatico" name="GenerarAutomatico" onclick="this.form.action='<?php echo $helper->url("TablaAmortizacion","InsertaTablaAmortizacionAutomatica"); ?>'" class="btn btn-info" >Guardar Automatico</button>
+                                   <?php if(!empty($resultRes)){?>
             					   <input type="submit" id="Generar" name="Generar"  value="Generar" class="btn btn-warning " />
             					   <?php } ?>
             					   <?php if(!empty($resultDatos)){?>
