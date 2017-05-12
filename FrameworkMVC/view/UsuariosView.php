@@ -31,7 +31,7 @@
       <form  id="form-usuarios" action="<?php echo $helper->url("Usuarios","InsertaUsuarios"); ?>" method="post" enctype="multipart/form-data"  class="col-lg-5">
             <br>
            
-          <?php if ($resultEdit !="" ) { foreach($resultEdit as $resEdit) {?>
+          <?php if (!empty($resultEdit)) { foreach($resultEdit as $resEdit) {?>
            
             <div class="well">
             <h4 style="color:#ec971f;">Datos del Usuario</h4>
