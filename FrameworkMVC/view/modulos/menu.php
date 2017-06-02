@@ -240,6 +240,9 @@ $controladores=$_SESSION['controladores'];
 			<li style="<?php echo getcontrolador("RecalcularTablaAmortizacion",$controladores) ?>">
 			<a href="index.php?controller=RecalcularTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Registrar Pago</span> </a>
 		  </li>
+		  <li style="<?php echo getcontrolador("ConsultaHistorialCreditos",$controladores) ?>">
+			<a href="index.php?controller=ConsultaHistorialCreditos&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Consulta Historial Creditos</span> </a>
+		  </li>
 </ul>
 </li>
 <li class="dropdown" style="<?php echo getcontrolador("MenuReportes",$controladores) ?>">
