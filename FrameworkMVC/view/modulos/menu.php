@@ -241,7 +241,7 @@ $controladores=$_SESSION['controladores'];
 			<a href="index.php?controller=RecalcularTablaAmortizacion&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Registrar Pago</span> </a>
 		  </li>
 		  <li style="<?php echo getcontrolador("ConsultaHistorialCreditos",$controladores) ?>">
-			<a href="index.php?controller=ConsultaHistorialCreditos&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Consulta Historial Creditos</span> </a>
+			<a href="index.php?controller=ConsultaHistorialCreditos&action=index"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"> Consulta General de Prestamos</span> </a>
 		  </li>
 </ul>
 </li>

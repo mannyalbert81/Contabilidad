@@ -4,7 +4,7 @@
       <head>
       
         <meta charset="utf-8"/>
-        <title>Historial Creditos - contabilidad 2016</title>
+        <title>Reporte Creditos - contabilidad 2016</title>
         
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		  			   
@@ -161,7 +161,7 @@
          <div class="col-lg-12">
 	         <div class="panel panel-info">
 	         <div class="panel-heading">
-	         <h4><i class='glyphicon glyphicon-edit'></i>Historial Creditos</h4>
+	         <h4><i class='glyphicon glyphicon-edit'></i> Consulta General de Prestamos</h4>
 	         </div>
 	         <div class="panel-body">
 			
