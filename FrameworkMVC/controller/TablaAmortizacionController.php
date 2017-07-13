@@ -91,7 +91,7 @@ class TablaAmortizacionController extends ControladorBase{
 					
 					
 		     	if(isset($_POST["Generar"]))
-					{
+				{
 								
 						$interes=0;
 						$total= isset($_POST['capital_prestado_amortizacion_cabeza'])?(double)$_POST['capital_prestado_amortizacion_cabeza']:2; 
@@ -450,7 +450,7 @@ class TablaAmortizacionController extends ControladorBase{
 	
 	
 	
-	
+	/*
 	public function InsertaTablaAmortizacionAutomatica(){
 
 
@@ -685,7 +685,7 @@ class TablaAmortizacionController extends ControladorBase{
 		
 	}
 	
-	
+	*/
 	
 }
 ?>
