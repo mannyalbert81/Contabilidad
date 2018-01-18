@@ -1,9 +1,7 @@
     <?php include("view/modulos/head.php");?> 
     <?php include("view/modulos/menu.php");?>  
     <?php include("view/modulos/modal.php");?>
-    <?php include("view/FACTURACION_COMPRAS/modal/modal_grupos.php");?>
-    <?php include("view/FACTURACION_COMPRAS/modal/modal_um.php");?>
-    <?php include("view/FACTURACION_COMPRAS/modal/buscar_productos.php");?>
+
    
    
     
@@ -18,12 +16,18 @@
           <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
           <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>  
           <script src="view/js/jquery.js"></script>
-		  <script src="view/js/bootstrapValidator.min.js"></script>
-		  <script src="view/js/ValidarFc_Productos.js"></script>
-	      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-          <script type="text/javascript" src="view/FACTURACION_COMPRAS/js/VentanaCentrada.js"></script>
-          <script type="text/javascript" src="view/FACTURACION_COMPRAS/js/procesos-fc_productos.js"></script>
-	      
+		  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        
+	   
+       <script src="view/js/jquery.inputmask.bundle.js"></script>
+		
+       <script>
+      $(document).ready(function(){
+      $(".cantidades").inputmask();
+      });
+
+      
+    </script>
        
          
     <script >   
@@ -60,6 +64,336 @@
             </script>
             
            
+           
+           <script>
+	       	$(document).ready(function(){ 	
+				$( "#id_cuenta_pagar_ver" ).autocomplete({
+      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesCodigo"); ?>",
+      				minLength: 1
+    			});
+
+				$("#id_cuenta_pagar_ver").focusout(function(){
+    				$.ajax({
+    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveNombre"); ?>',
+    					type:'POST',
+    					dataType:'json',
+    					data:{codigo_plan_cuentas:$('#id_cuenta_pagar_ver').val()}
+    				}).done(function(respuesta){
+
+    					$('#nombre_cuenta_pagar_ver').val(respuesta.nombre_plan_cuentas);
+    					$('#id_cuenta_pagar').val(respuesta.id_plan_cuentas);
+    				
+        			});
+    				 
+    				
+    			});   
+				
+    		});
+
+			
+     </script>
+
+
+		<script>
+			       	$(document).ready(function(){ 	
+						$( "#nombre_cuenta_pagar_ver" ).autocomplete({
+		      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesNombre"); ?>",
+		      				minLength: 1
+		    			});
+		
+						$("#nombre_cuenta_pagar_ver").focusout(function(){
+		    				$.ajax({
+		    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveCodigo"); ?>',
+		    					type:'POST',
+		    					dataType:'json',
+		    					data:{nombre_plan_cuentas:$('#nombre_cuenta_pagar_ver').val()}
+		    				}).done(function(respuesta){
+		
+		    					$('#id_cuenta_pagar_ver').val(respuesta.codigo_plan_cuentas);
+		    					$('#id_cuenta_pagar').val(respuesta.id_plan_cuentas);
+		    				
+		        			});
+		    				 
+		    				
+		    			});   
+						
+		    		});
+		
+					
+		     </script>
+           
+           
+           
+           
+           
+           
+           
+            
+           <script>
+	       	$(document).ready(function(){ 	
+				$( "#id_cuenta_cobrar_ver" ).autocomplete({
+      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesCodigo"); ?>",
+      				minLength: 1
+    			});
+
+				$("#id_cuenta_cobrar_ver").focusout(function(){
+    				$.ajax({
+    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveNombre"); ?>',
+    					type:'POST',
+    					dataType:'json',
+    					data:{codigo_plan_cuentas:$('#id_cuenta_cobrar_ver').val()}
+    				}).done(function(respuesta){
+
+    					$('#nombre_cuenta_cobrar_ver').val(respuesta.nombre_plan_cuentas);
+    					$('#id_cuenta_cobrar').val(respuesta.id_plan_cuentas);
+    				
+        			});
+    				 
+    				
+    			});   
+				
+    		});
+
+			
+     </script>
+
+
+		<script>
+			       	$(document).ready(function(){ 	
+						$( "#nombre_cuenta_cobrar_ver" ).autocomplete({
+		      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesNombre"); ?>",
+		      				minLength: 1
+		    			});
+		
+						$("#nombre_cuenta_cobrar_ver").focusout(function(){
+		    				$.ajax({
+		    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveCodigo"); ?>',
+		    					type:'POST',
+		    					dataType:'json',
+		    					data:{nombre_plan_cuentas:$('#nombre_cuenta_cobrar_ver').val()}
+		    				}).done(function(respuesta){
+		
+		    					$('#id_cuenta_cobrar_ver').val(respuesta.codigo_plan_cuentas);
+		    					$('#id_cuenta_cobrar').val(respuesta.id_plan_cuentas);
+		    				
+		        			});
+		    				 
+		    				
+		    			});   
+						
+		    		});
+		
+					
+		     </script>
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+            
+           <script>
+	       	$(document).ready(function(){ 	
+				$( "#id_cuenta_anticipo_entregado_ver" ).autocomplete({
+      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesCodigo"); ?>",
+      				minLength: 1
+    			});
+
+				$("#id_cuenta_anticipo_entregado_ver").focusout(function(){
+    				$.ajax({
+    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveNombre"); ?>',
+    					type:'POST',
+    					dataType:'json',
+    					data:{codigo_plan_cuentas:$('#id_cuenta_anticipo_entregado_ver').val()}
+    				}).done(function(respuesta){
+
+    					$('#nombre_cuenta_anticipo_entregado_ver').val(respuesta.nombre_plan_cuentas);
+    					$('#id_cuenta_anticipo_entregado').val(respuesta.id_plan_cuentas);
+    				
+        			});
+    				 
+    				
+    			});   
+				
+    		});
+
+			
+     </script>
+
+
+		<script>
+			       	$(document).ready(function(){ 	
+						$( "#nombre_cuenta_anticipo_entregado_ver" ).autocomplete({
+		      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesNombre"); ?>",
+		      				minLength: 1
+		    			});
+		
+						$("#nombre_cuenta_anticipo_entregado_ver").focusout(function(){
+		    				$.ajax({
+		    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveCodigo"); ?>',
+		    					type:'POST',
+		    					dataType:'json',
+		    					data:{nombre_plan_cuentas:$('#nombre_cuenta_anticipo_entregado_ver').val()}
+		    				}).done(function(respuesta){
+		
+		    					$('#id_cuenta_anticipo_entregado_ver').val(respuesta.codigo_plan_cuentas);
+		    					$('#id_cuenta_anticipo_entregado').val(respuesta.id_plan_cuentas);
+		    				
+		        			});
+		    				 
+		    				
+		    			});   
+						
+		    		});
+		
+					
+		     </script>
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           <script>
+	       	$(document).ready(function(){ 	
+				$( "#id_cuenta_anticipo_recibido_ver" ).autocomplete({
+      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesCodigo"); ?>",
+      				minLength: 1
+    			});
+
+				$("#id_cuenta_anticipo_recibido_ver").focusout(function(){
+    				$.ajax({
+    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveNombre"); ?>',
+    					type:'POST',
+    					dataType:'json',
+    					data:{codigo_plan_cuentas:$('#id_cuenta_anticipo_recibido_ver').val()}
+    				}).done(function(respuesta){
+
+    					$('#nombre_cuenta_anticipo_recibido_ver').val(respuesta.nombre_plan_cuentas);
+    					$('#id_cuenta_anticipo_recibido').val(respuesta.id_plan_cuentas);
+    				
+        			});
+    				 
+    				
+    			});   
+				
+    		});
+
+			
+     </script>
+
+
+		<script>
+			       	$(document).ready(function(){ 	
+						$( "#nombre_cuenta_anticipo_recibido_ver" ).autocomplete({
+		      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesNombre"); ?>",
+		      				minLength: 1
+		    			});
+		
+						$("#nombre_cuenta_anticipo_recibido_ver").focusout(function(){
+		    				$.ajax({
+		    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveCodigo"); ?>',
+		    					type:'POST',
+		    					dataType:'json',
+		    					data:{nombre_plan_cuentas:$('#nombre_cuenta_anticipo_recibido_ver').val()}
+		    				}).done(function(respuesta){
+		
+		    					$('#id_cuenta_anticipo_recibido_ver').val(respuesta.codigo_plan_cuentas);
+		    					$('#id_cuenta_anticipo_recibido').val(respuesta.id_plan_cuentas);
+		    				
+		        			});
+		    				 
+		    				
+		    			});   
+						
+		    		});
+		
+					
+		     </script>
+           
+           
+           
+           
+           
+           
+           <script>
+			       	$(document).ready(function(){ 	
+						$( "#ruc_proveedores" ).autocomplete({
+		      				source: "<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesCedulaCliente"); ?>",
+		      				minLength: 1
+		    			});
+		
+						$("#ruc_proveedores").focusout(function(){
+		    				$.ajax({
+		    					url:'<?php echo $helper->url("FC_Proveedores","AutocompleteComprobantesDevuelveDatosCliente"); ?>',
+		    					type:'POST',
+		    					dataType:'json',
+		    					data:{ruc_proveedores:$('#ruc_proveedores').val()}
+		    				}).done(function(respuesta){
+		
+		    					$('#razon_social_proveedores').val(respuesta.razon_social_proveedores);
+		    					$('#direccion_proveedores').val(respuesta.direccion_proveedores);
+		    					$('#telefono_proveedores').val(respuesta.telefono_proveedores);
+		    					$('#celular_proveedores').val(respuesta.celular_proveedores);
+		    					$('#email_proveedores').val(respuesta.email_proveedores);
+		    					$('#web_proveedores').val(respuesta.web_proveedores);
+		    					$('#retencion_fuente').val(respuesta.retencion_fuente);
+		    					$('#retencion_iva').val(respuesta.retencion_iva);
+
+		    					$('#ci_contacto_proveedores').val(respuesta.ci_contacto_proveedores);
+		    					$('#contacto_razon_social_proveedores').val(respuesta.nombres_contacto_proveedores);
+		    					$('#telefono_contacto_proveedores').val(respuesta.telefono_contacto_proveedores);
+		    					$('#celular_contacto_proveedores').val(respuesta.celular_contacto_proveedores);
+		    					$('#email_contacto_proveedores').val(respuesta.email_contacto_proveedores);
+
+		    					$('#id_ciudad').val(respuesta.id_ciudad);
+		    					$('#id_entidades').val(respuesta.id_entidades);
+		    					$('#id_tipo_contribuyente').val(respuesta.id_tipo_contribuyente);
+		    					$('#id_tipo_persona').val(respuesta.id_tipo_persona);
+		    					$('#id_tipo_identificacion').val(respuesta.id_tipo_identificacion);
+		    					$('#dias_credito_cliente_proveedor').val(respuesta.dias_credito_cliente_proveedor);
+		    					$('#id_tipo_cliente_proveedor').val(respuesta.id_tipo_cliente_proveedor);
+
+		    					$('#id_cuenta_pagar_ver').val(respuesta.codigo_plan_cuentas_pagar);
+		    					$('#id_cuenta_pagar').val(respuesta.id_cuenta_pagar);
+		    					$('#nombre_cuenta_pagar_ver').val(respuesta.nombre_plan_cuentas_pagar);
+
+		    					$('#id_cuenta_cobrar_ver').val(respuesta.codigo_plan_cuentas_cobrar);
+		    					$('#id_cuenta_cobrar').val(respuesta.id_cuenta_cobrar);
+		    					$('#nombre_cuenta_cobrar_ver').val(respuesta.nombre_plan_cuentas_cobrar);
+
+		    					$('#id_cuenta_anticipo_entregado_ver').val(respuesta.codigo_plan_cuentas_anticipo_entregado);
+		    					$('#id_cuenta_anticipo_entregado').val(respuesta.id_cuenta_anticipo_entregado);
+		    					$('#nombre_cuenta_anticipo_entregado_ver').val(respuesta.nombre_plan_cuentas_anticipo_entregado);
+
+		    					$('#id_cuenta_anticipo_recibido_ver').val(respuesta.codigo_plan_cuentas_anticipo_recibido);
+		    					$('#id_cuenta_anticipo_recibido').val(respuesta.id_cuenta_anticipo_recibido);
+		    					$('#nombre_cuenta_anticipo_recibido_ver').val(respuesta.nombre_plan_cuentas_anticipo_recibido);
+		    					
+		    				
+		        			});
+		    				 
+		    				
+		    			});   
+						
+		    		});
+		
+					
+		     </script>
+           
+           
+           
+           
+           
             
 	         
      </head>
@@ -79,7 +413,7 @@
              
     	<div class="container">
         <div class="row" style="background-color: #FAFAFA;">
-  		<form id="form-fc_productos" action="<?php echo $helper->url("FC_Proveedores","index"); ?>" method="post" enctype="multipart/form-data" class="col-lg-12">
+  		<form id="" action="<?php echo $helper->url("FC_Proveedores","InsertaFC_Proveedores"); ?>" method="post" enctype="multipart/form-data" class="col-lg-12">
             
             <br>	
             
@@ -92,7 +426,6 @@
 			 </div>
 		     </div>
 		     
-		    
 	         </div>
 	         </div>
 	         </div>
@@ -100,21 +433,21 @@
 	         
   			 
   			 <div class="col-lg-12">
-  			<div class="col-lg-6">
-  			<div class="panel panel-info">
+  			 <div class="col-lg-12">
+  			 <div class="panel panel-info">
 	         <div class="panel-body">
 	         <div class="row">
 	         
-	          <div class="form-group" style="margin-top:15px">
+	         <div class="form-group" style="margin-top:15px">
              <div class="col-xs-4 col-md-4">
              
-                                  <label for="ruc_proveedores" class="control-label">Ruc:</label>
-                                  <input type="text" class="form-control" id="ruc_proveedores" name="ruc_proveedores" value=""   placeholder="Ruc" >
+                                  <label for="ruc_proveedores" class="control-label">CI/Ruc:</label>
+                                  <input type="number" class="form-control" id="ruc_proveedores" name="ruc_proveedores" value=""   placeholder="Ruc" >
                                   <span class="help-block"></span>
              </div>
              </div>
              
-              <div class="form-group">
+             <div class="form-group">
              <div class="col-xs-8 col-md-8">
              
                                   <label for="razon_social_proveedores" class="control-label">Razón Social:</label>
@@ -124,28 +457,27 @@
              </div>
              </div>
              
+             
             <div class="row"> 
-	        <div class="form-group" style="margin-top:15px">
+            <div class="form-group" style="margin-top:15px">
             <div class="col-xs-6 col-md-6">
-		                          <label for="id_provincias" class="control-label">Provincia:</label>
-                                  <select name="id_provincias" id="id_provincias"  class="form-control">
+		                          <label for="id_tipo_cliente_proveedor" class="control-label">Tipo Cliente:</label>
+                                  <select name="id_tipo_cliente_proveedor" id="id_tipo_cliente_proveedor"  class="form-control" >
                                   <option value="" selected="selected">--Seleccione--</option>
-                                  	<?php foreach($resultProv as $res) {?>
-										<option value="<?php echo $res->id_provincias; ?>"  ><?php echo $res->nombre_provincias; ?> </option>
+									<?php foreach($result_Tip_Cli_Prov as $res) {?>
+										<option value="<?php echo $res->id_tipo_cliente_proveedor; ?>"  ><?php echo $res->nombre_tipo_cliente_proveedor; ?> </option>
 							        <?php } ?>
 								   </select> 
                                   <span class="help-block"></span>
             </div>
             </div>
             
-           
-           
 	        <div class="form-group">
             <div class="col-xs-6 col-md-6">
 		                          <label for="id_ciudad" class="control-label">Ciudad:</label>
                                   <select name="id_ciudad" id="id_ciudad"  class="form-control" >
                                   <option value="" selected="selected">--Seleccione--</option>
-									<?php foreach($result_ciu as $res) {?>
+									<?php foreach($result_ciudad as $res) {?>
 										<option value="<?php echo $res->id_ciudad; ?>"  ><?php echo $res->nombre_ciudad; ?> </option>
 							        <?php } ?>
 								   </select> 
@@ -170,7 +502,7 @@
 		                          <label for="id_tipo_contribuyente" class="control-label">Tipo Contribuyente:</label>
                                   <select name="id_tipo_contribuyente" id="id_tipo_contribuyente"  class="form-control">
                                   <option value="" selected="selected">--Seleccione--</option>
-                                  	<?php foreach($resultContri as $res) {?>
+                                  	<?php foreach($result_tipo_contrib as $res) {?>
 										<option value="<?php echo $res->id_tipo_contribuyente; ?>"  ><?php echo $res->nombre_tipo_contribuyente; ?> </option>
 							        <?php } ?>
 								   </select> 
@@ -235,7 +567,7 @@
 		     <div class="form-group">
              <div class="col-xs-6 col-md-6">
 		                          <label for="email_proveedores" class="control-label">Email:</label>
-                                  <input type="text" class="form-control" id="email_proveedores" name="email_proveedores" value=""   placeholder="Correo Electrónico">
+                                  <input type="email" class="form-control" id="email_proveedores" name="email_proveedores" value=""   placeholder="Correo Electrónico">
                                   <span class="help-block"></span>
              </div>
 		     </div>
@@ -251,15 +583,21 @@
 		     <div class="form-group">
              <div class="col-xs-6 col-md-6">
 		                          <label for="retencion_fuente" class="control-label">Retención Fuente:</label>
-                                  <input type="text" class="form-control" id="retencion_fuente" name="retencion_fuente" value="" onkeypress="return numeros(event)" placeholder="0.00">
+                                  <input type="text" class="form-control cantidades" id="retencion_fuente" name="retencion_fuente" value="0"
+                                   data-inputmask="'alias': 'numeric', 'autoGroup': true, 'digits': 2, 'digitsOptional': false">
                                   <span class="help-block"></span>
              </div>
 		     </div>
 		     
+		     
+		    
+		     
+		     
 		     <div class="form-group">
              <div class="col-xs-6 col-md-6">
 		                          <label for="retencion_iva" class="control-label">Retención Iva:</label>
-                                  <input type="text" class="form-control" id="retencion_iva" name="retencion_iva" value=""  onkeypress="return numeros(event)" placeholder="0%">
+                                  <input type="text" class="form-control cantidades" id="retencion_iva" name="retencion_iva" value="0"
+                                  data-inputmask="'alias': 'numeric', 'autoGroup': true, 'digits': 2, 'digitsOptional': false">
                                   <span class="help-block"></span>
              </div>
 		     </div>
@@ -335,6 +673,15 @@
                                   <span class="help-block"></span>
              </div>
 		     </div>
+		     
+		     <div class="form-group">
+		     <div class="col-xs-6 col-md-6">                     
+                                  <label for="dias_credito_cliente_proveedor" class="control-label">Número Dias Crédito: </label>
+                                  <input type="number" class="form-control" id="dias_credito_cliente_proveedor" name="dias_credito_cliente_proveedor" onkeypress="return numeros(event)" value=""  placeholder="#">
+                                  <span class="help-block"></span>
+             </div>
+		     </div>
+		     
 		      </div>
 		     
 		     
@@ -353,7 +700,7 @@
 			  <div class="col-md-12">
 					<div class="pull-right">
 						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#Productos">
-						 <span class="glyphicon glyphicon-search"></span> Buscar Productos
+						 <span class="glyphicon glyphicon-search"></span> Buscar Proveedor
 						</button>
 					</div>	
 			 </div>	
@@ -371,7 +718,7 @@
              <div class="col-xs-4 col-md-4">
              
                                   <label for="ci_contacto_proveedores" class="control-label">CI Contacto:</label>
-                                  <input type="text" class="form-control" id="ci_contacto_proveedores" name="ci_contacto_proveedores" value=""   placeholder="Cedula" >
+                                  <input type="number" class="form-control" id="ci_contacto_proveedores" name="ci_contacto_proveedores" value=""   placeholder="Cedula" >
                                   <span class="help-block"></span>
              </div>
              </div>
@@ -379,8 +726,8 @@
              <div class="form-group">
              <div class="col-xs-8 col-md-8">
              
-                                  <label for="razon_social_proveedores" class="control-label">Nombres Contacto:</label>
-                                  <input type="text" class="form-control" id="razon_social_proveedores" name="razon_social_proveedores" value=""  placeholder="Nombres">
+                                  <label for="contacto_razon_social_proveedores" class="control-label">Nombres Contacto:</label>
+                                  <input type="text" class="form-control" id="contacto_razon_social_proveedores" name="contacto_razon_social_proveedores" value=""  placeholder="Nombres">
                                   <span class="help-block"></span>
              </div>
              </div>
@@ -405,7 +752,7 @@
 		     <div class="form-group">
              <div class="col-xs-6 col-md-6">
 		                          <label for="email_contacto_proveedores" class="control-label">Email:</label>
-                                  <input type="text" class="form-control" id="email_contacto_proveedores" name="email_contacto_proveedores" value=""   placeholder="Correo Electrónico">
+                                  <input type="email" class="form-control" id="email_contacto_proveedores" name="email_contacto_proveedores" value=""   placeholder="Correo Electrónico">
                                   <span class="help-block"></span>
              </div>
 		     </div>
@@ -420,7 +767,7 @@
 	       <div class="row">
 		   <div class="col-xs-12 col-md-12 col-lg-12" style="text-align: center; margin-top:20px" > 
            <div class="form-group">
-            					  <button type="submit" id="Guardar" name="Guardar" onclick="this.form.action='<?php echo $helper->url("FC_Proveedores","InsertaFC_Proveedores"); ?>'" class="btn btn-success" >Guardar</button>
+            					  <button type="submit" id="Guardar" name="Guardar" class="btn btn-success" >Guardar</button>
            </div>
            </div>
            </div>
