@@ -4,14 +4,7 @@ class Conectar{
     private $host, $user, $pass, $database, $charset, $port;
   
     public function __construct() {
-        $db_cfg = require_once 'config/database.php';
-        $this->driver=$db_cfg["driver"];
-        $this->host=$db_cfg["host"];
-        $this->user=$db_cfg["user"];
-        $this->pass=$db_cfg["pass"];
-        $this->database=$db_cfg["database"];
-        $this->charset=$db_cfg["charset"];
-        $this->port=$db_cfg["port"];
+       
     }
     
     public function conexion(){

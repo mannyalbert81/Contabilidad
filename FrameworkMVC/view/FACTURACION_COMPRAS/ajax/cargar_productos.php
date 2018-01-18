@@ -1,8 +1,14 @@
 <?php
-  session_start();
+ 
+include'../../../core/Conectar.php';
+$cn = new Conectar();
+$conn = $cn->conexion();
+
+session_start();
+
+
+
   $_id_usuarios= $_SESSION['id_usuarios'];
-  
-  $conn  = pg_connect("user=postgres port=5432 password=.Romina.2012 dbname=contabilidad_des host=186.4.203.42");
   
 		if(!$conn)
 		{
