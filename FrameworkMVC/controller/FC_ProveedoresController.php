@@ -94,6 +94,8 @@ class FC_ProveedoresController extends ControladorBase{
 	
 	
 	
+	
+	
    public function InsertaFC_Proveedores(){
    
    	session_start();
@@ -107,9 +109,9 @@ class FC_ProveedoresController extends ControladorBase{
    	if (!empty($resultPer))
    	{
    		$_id_usuarios= $_SESSION['id_usuarios'];
+   		$resultado = null;
    		
-   		
-   		if (isset ($_POST["Guardar"]))
+   		if (isset ($_POST["ruc_proveedores"]))
    		{
    			
    			$_ruc_proveedores  		         = $_POST["ruc_proveedores"];
@@ -178,13 +180,25 @@ class FC_ProveedoresController extends ControladorBase{
    			$resultado=$fc_proveedores->Insert();
    			
    			
-   		
+   			$html="";
+   			if ($resultado)  {
+   				$html .= "<div class='col-lg-6 col-xs-12' id='ocultar'>";
+   				$html .= "<div class='alert alert-success' role='alert'><strong>Cliente Registrado Correctamente..</strong></div>";
+   				$html .= "</div>";
+   			
+   			
+   				echo $html;
+   			}else{
+   			
+   				$html .= "<div class='col-lg-6 col-xs-12' id='ocultar'>";
+   				$html .= "<div class='alert alert-danger' role='alert'><strong>No pudimos registrar el Cliente..</strong></div>";
+   				$html .= "</div>";
+   				echo $html;
+   			}
    			
    		}
    		
    		
-   		
-   		$this->redirect("FC_Proveedores","index")	;
    	}
    	else
    	{
@@ -198,6 +212,41 @@ class FC_ProveedoresController extends ControladorBase{
    
    
    
+   
+   
+   public function EliminarProveedor()
+   {
+   	session_start();
+   	$resultado = null;
+   	$provedores=new FC_ProveedoresModel();
+   	
+   
+   	if(isset($_GET["id_proveedor"]))
+   	{
+   		
+   		$id_proveedor=(int)$_GET["id_proveedor"];
+   		$usuarios=new UsuariosModel();
+   		$resultado = $provedores->deleteBy("id_proveedores",$id_proveedor);
+   
+   		$html="";
+   		if ($resultado)  {
+   			$html .= "<div class='col-lg-6 col-xs-12' id='ocultar'>";
+   			$html .= "<div class='alert alert-success' role='alert'><strong>Cliente Eliminado Correctamente..</strong></div>";
+   			$html .= "</div>";
+   			
+   			
+   			echo $html;
+   		}else{
+   			
+   			$html .= "<div class='col-lg-6 col-xs-12' id='ocultar'>";
+   			$html .= "<div class='alert alert-danger' role='alert'><strong>No pudimos eliminar el Cliente..</strong></div>";
+   			$html .= "</div>";
+   			echo $html;
+   		}
+   		
+   	}
+   	
+   }
    
    
 
@@ -374,7 +423,8 @@ class FC_ProveedoresController extends ControladorBase{
    	$_id_usuarios= $_SESSION['id_usuarios'];
    	$proveedores = new FC_ProveedoresModel();
    	$ruc_proveedores = $_GET['term'];
-   	 
+   	$tipo_cliente_proveedor = new TipoClienteProveedorModel();
+   	
    	 
    	 
    	 
@@ -417,7 +467,7 @@ class FC_ProveedoresController extends ControladorBase{
    	if(!empty($resultSet)){
    		 
    		foreach ($resultSet as $res){
-   			 
+   			
    			$_ruc_proveedores[] = $res->ruc_proveedores;
    		}
    		echo json_encode($_ruc_proveedores);
@@ -432,10 +482,16 @@ class FC_ProveedoresController extends ControladorBase{
    	session_start();
    	$_id_usuarios= $_SESSION['id_usuarios'];
    	 
-   	 $plan_cuentas = new PlanCuentasModel();
+   	$plan_cuentas = new PlanCuentasModel();
    	$proveedores = new FC_ProveedoresModel();
+   	
   	$ruc_proveedores = $_POST['ruc_proveedores'];
-
+    $id_tipo_cliente_proveedor  = $_POST['id_tipo_cliente_proveedor'];
+    
+    
+    
+    
+    
    	$columnas ="fc_proveedores.id_proveedores,
 			  fc_proveedores.ruc_proveedores,
 			  fc_proveedores.razon_social_proveedores,
@@ -465,7 +521,20 @@ class FC_ProveedoresController extends ControladorBase{
    			  fc_proveedores.id_usuario";
    	
    	$tablas ="public.fc_proveedores";
-   	$where ="fc_proveedores.ruc_proveedores ='$ruc_proveedores' AND fc_proveedores.id_usuario='$_id_usuarios'";
+   	
+   	if($id_tipo_cliente_proveedor > 0){
+   		
+   		$where ="fc_proveedores.ruc_proveedores ='$ruc_proveedores' AND   fc_proveedores.id_tipo_cliente_proveedor='$id_tipo_cliente_proveedor' AND fc_proveedores.id_usuario='$_id_usuarios'";
+   		 
+   	} if($ruc_proveedores !=""){
+   		
+   		$where ="fc_proveedores.ruc_proveedores ='$ruc_proveedores' AND fc_proveedores.id_usuario='$_id_usuarios'";
+   		 
+   	}
+   	
+   	
+   	
+   	
    	$id ="fc_proveedores.id_proveedores";
    	 
    	 
@@ -536,6 +605,8 @@ class FC_ProveedoresController extends ControladorBase{
    	}
    	 
    }
+   
+   
    
    
    
