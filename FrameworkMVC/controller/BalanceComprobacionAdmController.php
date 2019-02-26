@@ -17,8 +17,8 @@ class BalanceComprobacionAdmController extends ControladorBase{
 		$ccomprobantes = new CComprobantesModel();
 		$dcomprobantes = new DComprobantesModel();
 		$cierre_mes = new CierreMesModel();
-		$cuenta_cierre_mes = new CuentasCierreMesModel();
-		
+	   $cuenta_cierre_mes = new CuentasCierreMesModel();
+		  
 		$entidades = new EntidadesModel();
 		
 		$columnas_enc = "entidades.id_entidades,

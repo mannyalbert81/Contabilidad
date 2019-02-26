@@ -21,7 +21,7 @@ class CComprobantesGuardadosController extends ControladorBase{
 			
 			$ccomprobantes_guardados= new CComprobantesGuardadosModel();
 			
-			//Conseguimos todos los usuarios
+			//Conseguimos todos los usuarios//
 			$columnas_set="ccomprobantes_guardados.id_ccomprobantes_guardados,
 				  ccomprobantes_guardados.identificador_ccomprobantes_guardados,
 				  entidades.nombre_entidades";

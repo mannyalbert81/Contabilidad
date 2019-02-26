@@ -164,7 +164,7 @@ class PermisosRolesController extends ControladorBase{
 			$this->redirect("PermisosRoles", "index");
 			
 			}
-			catch (Exeption $Ex)
+			catch (Exception $Ex)
 			{
 				$this->view("Error",array(
 						"resultado"=>$Ex

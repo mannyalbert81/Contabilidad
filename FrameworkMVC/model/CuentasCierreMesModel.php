@@ -1,5 +1,5 @@
 <?php
-class CComprobantesGuardadosModel extends ModeloBase{
+class CuentasCierreMesModel extends ModeloBase{
 	
 	private $table;
 	private $where;
@@ -17,7 +17,6 @@ class CComprobantesGuardadosModel extends ModeloBase{
 	public function getFuncion() {
 		return $this->funcion;
 	}
-	
 	
 	public function setFuncion($funcion) {
 		$this->funcion = $funcion;
@@ -38,7 +37,7 @@ class CComprobantesGuardadosModel extends ModeloBase{
 	
 	
 	public function __construct(){
-		$this->table="ccomprobantes_guardados";
+		$this->table="cuentas_cierre_mes";
 		
 		parent::__construct($this->table);
 	}

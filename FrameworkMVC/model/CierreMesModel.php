@@ -1,5 +1,5 @@
 <?php
-class CComprobantesGuardadosModel extends ModeloBase{
+class CierreMesModel extends ModeloBase{
 	
 	private $table;
 	private $where;
@@ -38,7 +38,7 @@ class CComprobantesGuardadosModel extends ModeloBase{
 	
 	
 	public function __construct(){
-		$this->table="ccomprobantes_guardados";
+		$this->table="historial_prestamos_sudamericano";
 		
 		parent::__construct($this->table);
 	}

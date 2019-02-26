@@ -104,7 +104,7 @@ class EntidadBase{
     	{
     		$query=pg_query($this->con,"DELETE FROM $this->table WHERE $column='$value' ");
     	}
-    	catch (Exeption $Ex)
+    	catch (Exception $Ex)
     	{
     		
     		
@@ -119,7 +119,7 @@ class EntidadBase{
     	{
     		$query=pg_query($this->con,"DELETE FROM $this->table WHERE $where ");
     	}
-    	catch (Exeption $Ex)
+    	catch (Exception $Ex)
     	{
     
     
@@ -195,7 +195,7 @@ class EntidadBase{
     	     $query=pg_query($this->con, "UPDATE $tabla SET  $colval   WHERE $where ");
     	     
     	}
-    	catch (Exeption  $Ex)
+    	catch (Exception  $Ex)
     	{
     		
     		
